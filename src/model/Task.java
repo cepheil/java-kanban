@@ -1,37 +1,27 @@
+package model;
+
+import util.TaskStatus;
+import util.TaskType;
 import java.util.Objects;
 
 public class Task {
 
-    private final int taskID;
+    private int taskID;
     protected TaskType taskType;
     private String name;
     private String description;
     private TaskStatus status;
-    private static int counter = 0;
 
 
     public Task(String name, String description, TaskStatus status) {
         this.name = name;
         this.description = description;
         this.status = status;
-        this.taskID = ++counter;
         this.taskType = TaskType.TASK;
     }
 
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Task task = (Task) o;
-        return Objects.equals(name, task.name) &&
-                Objects.equals(description, task.description);
-    }
-
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, description);
+    public void setTaskID(int taskID) {
+        this.taskID = taskID;
     }
 
     public void setName(String name) {
@@ -65,7 +55,24 @@ public class Task {
     @Override
     public String toString() {
         return "[" + taskType + "]" + " [ID:" + taskID + "]" +
-                " name: " + name + "[" + status + "]"  +
+                " name: " + name + " [" + status + "] "  +
                 "Description: " + description + "\n";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Task task = (Task) o;
+        return taskID == task.taskID &&
+                taskType == task.taskType &&
+                Objects.equals(name, task.name) &&
+                Objects.equals(description, task.description) &&
+                status == task.status;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(taskID, taskType, name, description, status);
     }
 }

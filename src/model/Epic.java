@@ -1,15 +1,18 @@
+package model;
+
+import util.TaskStatus;
+import util.TaskType;
+
 import java.util.ArrayList;
 
-public class Epic extends Task{
-
+public class Epic extends Task {
     private ArrayList<Integer> subtaskIdList;
 
-    public Epic(String name, String description, TaskStatus status) {
-        super(name, description, status);
+    public Epic(String name, String description) {
+        super(name, description, TaskStatus.NEW);
         this.subtaskIdList = new ArrayList<>();
         this.taskType = TaskType.EPIC;
     }
-
 
     public void setSubtaskIdList(int subtaskId) {
         if (this.subtaskIdList == null) {
@@ -20,5 +23,12 @@ public class Epic extends Task{
 
     public ArrayList<Integer> getSubtaskIdList() {
         return subtaskIdList;
+    }
+
+    public void removeSubtaskId(int subtaskId) {
+        this.subtaskIdList.remove(Integer.valueOf(subtaskId));
+    }
+    public void clearSubtaskIdList () {
+        this.subtaskIdList.clear();
     }
 }

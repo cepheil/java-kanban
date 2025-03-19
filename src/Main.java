@@ -1,3 +1,11 @@
+import controllers.TaskManager;
+import model.Epic;
+import model.Subtask;
+import model.Task;
+import util.TaskStatus;
+import util.TaskType;
+
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -19,21 +27,23 @@ public class Main {
             switch (cmd) {
                 case "1":
                     System.out.println("Печать списка всех задач.");
-                    manager.printAllTasks();
+                    printAllTasks(manager);
                     break;
 
                 case "2":
                     System.out.println("Печать списка всех задач выбранного типа.");
                     taskType = chooseTaskType(scanner);
+
                     switch (taskType) {
+
                         case TASK:
-                            manager.getTasks();  // мапа тасков
+                            System.out.println(manager.getTasks()); // лист Тасков
                             break;
                         case EPIC:
-                            manager.getEpics(); // мапа Эпиков
+                            System.out.println(manager.getEpics()); // лист Эпиков
                             break;
                         case SUBTASK:
-                            manager.getSubtasks(); //мапа Подзадач
+                            System.out.println(manager.getSubtasks()); //лист Подзадач
                             break;
                     }
                     break;
@@ -51,13 +61,13 @@ public class Main {
                     scanner.nextLine();
                     switch (taskType) {
                         case TASK:
-                            manager.getTaskById(taskID);
+                            System.out.println(manager.getTaskById(taskID));
                             break;
                         case EPIC:
-                            manager.getEpicById(taskID);
+                            System.out.println(manager.getEpicById(taskID));
                             break;
                         case SUBTASK:
-                            manager.getSubtaskById(taskID);
+                            System.out.println(manager.getSubtaskById(taskID));
                             break;
                     }
                     break;
@@ -98,17 +108,14 @@ public class Main {
                     System.out.println("обновление задачи");
                     taskType = chooseTaskType(scanner);
                     switch (taskType) {
-                        case TASK:
-                            Task taskForUpd = new Task("Ужин", "Приготовить еду самостоятельно", TaskStatus.NEW);
-                            manager.updateTask(2, taskForUpd);
+                        case TASK:// Обновление. Новая версия объекта с верным идентификатором передаётся в виде параметра.
+                            //manager.updateTask(   );
+                             break;
+                        case EPIC: // Обновление. Новая версия объекта с верным идентификатором передаётся в виде параметра.
+                            //manager.updateEpic(  );
                             break;
-                        case EPIC:
-                            Epic epicForUpd = new Epic("Купить весло", "Купить весло, втрое найти", TaskStatus.IN_PROGRESS);
-                            manager.updateEpic(6, epicForUpd);
-                            break;
-                        case SUBTASK:
-                            Subtask subtaskForUpd = new Subtask("Словить иксы", "Купить DOGE на низах", TaskStatus.IN_PROGRESS, 6);
-                            manager.updateSubtask(7, subtaskForUpd);
+                        case SUBTASK: // Обновление. Новая версия объекта с верным идентификатором передаётся в виде параметра.
+                            //manager.updateTask(  );
                             break;
                     }
                     break;
@@ -124,7 +131,7 @@ public class Main {
                     System.out.println("Введите epic taskID  для получения списка подзадач :");
                     taskID = scanner.nextInt();
                     scanner.nextLine();
-                    manager.getSubtasksList(taskID);
+                    System.out.println(manager.getSubtasksList(taskID));
                     break;
 
                 case "9":
@@ -164,7 +171,7 @@ public class Main {
     }
 
     public static Epic createEpic(String name, String description, TaskStatus status) {
-        Epic epic = new Epic(name, description, status);
+        Epic epic = new Epic(name, description);
         System.out.println("Создана ЭПИК задача taskID: " + epic.getTaskID());
         return epic;
     }
@@ -175,26 +182,20 @@ public class Main {
     }
 
     public static TaskType chooseTaskType(Scanner scanner) {
-        System.out.println("Введите тип задачи Обычная [T]  Эпик [E]  Подзадача [S] ");
-        String type = scanner.nextLine();
-        TaskType taskType;
-        switch (type.toUpperCase()) {
-            case "T":
-                taskType = TaskType.TASK;
-                break;
-            case "E":
-                taskType = TaskType.EPIC;
-                break;
-            case "S":
-                taskType = TaskType.SUBTASK;
-                break;
-            default:
-                System.out.print("по умолчанию  ");
-                taskType = TaskType.TASK;
-                break;
+        while (true) {
+            System.out.println("Введите тип задачи Обычная [T]  Эпик [E]  Подзадача [S] ");
+            String type = scanner.nextLine();
+            switch (type.toUpperCase()) {
+                case "T":
+                    return  TaskType.TASK;
+                case "E":
+                    return  TaskType.EPIC;
+                case "S":
+                    return  TaskType.SUBTASK;
+                default:
+                    System.out.print("Ошибка!  Введите тип задачи Обычная [T], Эпик [E], Подзадача [S] ");
+            }
         }
-        System.out.println("выбрана задача " + taskType);
-        return taskType;
     }
 
     public static TaskStatus chooseStatus(Scanner scanner) {
@@ -218,13 +219,60 @@ public class Main {
         }
     }
 
+    // метод для отладки - вывод всех задач.
+    public static void printAllTasks(TaskManager manager) {
+        ArrayList<Task> tasks = manager.getTasks();
+        ArrayList<Subtask> subtasks = manager.getSubtasks();
+        ArrayList<Epic> epics = manager.getEpics();
+
+
+        if (tasks.isEmpty() && epics.isEmpty() && subtasks.isEmpty()) {
+            System.out.println("Список задач пуст.");
+            return;
+        }
+        System.out.println("\n===== СПИСОК ВСЕХ ЗАДАЧ =====");
+        if (!tasks.isEmpty()) {
+            System.out.println("\n--- Обычные задачи ---");
+            for (Task task : tasks) {
+                System.out.println(task);
+            }
+        }
+        if (!epics.isEmpty()) {
+            System.out.println("\n--- Эпики и их подзадачи ---");
+            for (Epic epic : epics) {
+                System.out.println(epic); // Вывод самого эпика
+
+                ArrayList<Integer> subtaskIds = epic.getSubtaskIdList();   // получаем список ID подзадач эпика
+                System.out.println("Подзадачи эпика [" + epic.getTaskID() + "]: " + subtaskIds);
+                if (!subtaskIds.isEmpty()) {
+                    System.out.println("   Подзадачи:");
+
+
+                    for (Integer subtaskId : subtaskIds) {
+                        Subtask subtask = manager.getSubtaskById(subtaskId);
+                        //Subtask subtask = subtasks.get(subtaskId);
+                        if (subtask != null) {
+                            System.out.println("   ↳ " + subtask);
+                        } else {
+                            System.out.println("   ⚠ Ошибка: Подзадача с ID " + subtaskId + " не найдена!");
+                        }
+                    }
+                } else {
+                    System.out.println("   (Эпик пока не содержит подзадач)");
+                }
+            }
+        }
+        System.out.println("\n============================");
+    }
+
+
     public static void addPreloadedTasks(TaskManager manager) {
         Task task1 = new Task("Сходить в магазин", "Купить продукты на неделю.", TaskStatus.NEW);
         manager.addTask(task1);
         Task task2 = new Task("Обед", "Заказать еду через приложение", TaskStatus.IN_PROGRESS);
         manager.addTask(task2);
 
-        Epic epic1 = new Epic("Поездка в Сочи", "Поездка в Сочи на горнолыжку", TaskStatus.NEW);
+        Epic epic1 = new Epic("Поездка в Сочи", "Поездка в Сочи на горнолыжку");
         manager.addEpic(epic1);
         Subtask subtask1 = new Subtask("Билеты на самолет", "Купить билеты в Сочи",
                 TaskStatus.NEW, epic1.getTaskID());
@@ -233,7 +281,7 @@ public class Main {
                 TaskStatus.IN_PROGRESS, epic1.getTaskID());
         manager.addSubtask(subtask2);
 
-        Epic epic2 = new Epic("Обновление компьютера", "Заменить комплектующие пк", TaskStatus.NEW);
+        Epic epic2 = new Epic("Обновление компьютера", "Заменить комплектующие пк");
         manager.addEpic(epic2);
         Subtask subtask3 = new Subtask("купить видеокарту", "выбрать подходящую вк из серии 50..",
                 TaskStatus.NEW, epic2.getTaskID());

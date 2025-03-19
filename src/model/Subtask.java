@@ -1,5 +1,9 @@
-public class Subtask extends Task {
+package model;
 
+import util.TaskStatus;
+import util.TaskType;
+
+public class Subtask extends Task {
     private int epicID;
 
     public Subtask(String name, String description, TaskStatus status, int epicID) {
