@@ -5,7 +5,7 @@ import util.TaskType;
 
 import java.util.ArrayList;
 
-public class Epic extends Task {
+public class Epic extends model.Task {
     private ArrayList<Integer> subtaskIdList;
 
     public Epic(String name, String description) {
@@ -15,11 +15,19 @@ public class Epic extends Task {
     }
 
     public void setSubtaskIdList(int subtaskId) {
+        if (subtaskId == this.getTaskID()) {
+            return;
+        }
         if (this.subtaskIdList == null) {
             this.subtaskIdList = new ArrayList<>();
         }
         this.subtaskIdList.add(subtaskId);
     }
+
+    public void setSubtaskIdList(ArrayList<Integer> newSubtaskIdList) {
+        this.subtaskIdList = newSubtaskIdList;
+    }
+
 
     public ArrayList<Integer> getSubtaskIdList() {
         return subtaskIdList;

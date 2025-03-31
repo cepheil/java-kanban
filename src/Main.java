@@ -1,3 +1,4 @@
+import controllers.Managers;
 import controllers.TaskManager;
 import model.Epic;
 import model.Subtask;
@@ -17,7 +18,7 @@ public class Main {
         TaskStatus status;
         TaskType taskType;
         Scanner scanner = new Scanner(System.in);
-        TaskManager manager = new TaskManager();
+        TaskManager manager = Managers.getDefault();
 
 
         while (true) {
@@ -109,13 +110,13 @@ public class Main {
                     taskType = chooseTaskType(scanner);
                     switch (taskType) {
                         case TASK:// Обновление. Новая версия объекта с верным идентификатором передаётся в виде параметра.
-                            //manager.updateTask(   );
-                             break;
+                            updateTaskLogic(scanner, manager);
+                            break;
                         case EPIC: // Обновление. Новая версия объекта с верным идентификатором передаётся в виде параметра.
-                            //manager.updateEpic(  );
+                            updateEpicLogic(scanner, manager);
                             break;
                         case SUBTASK: // Обновление. Новая версия объекта с верным идентификатором передаётся в виде параметра.
-                            //manager.updateTask(  );
+                            updateSubtaskLogic(scanner, manager);
                             break;
                     }
                     break;
@@ -137,6 +138,12 @@ public class Main {
                 case "9":
                     addPreloadedTasks(manager);
                     System.out.println("Предустановленные задачи успешно добавлены.");
+                    break;
+
+
+                case "10":
+                    System.out.println("Печать истории");
+                    printHistory(manager);
                     break;
 
                 case "0":
@@ -162,6 +169,7 @@ public class Main {
         System.out.println("7. удаление по ID ");
         System.out.println("8. Получение списка всех подзадач определённого эпика. по epicID");
         System.out.println("9. Загрузить предустановленные задачи");
+        System.out.println("10. Печать истории");
         System.out.println("0. ВЫХОД");
     }
 
@@ -187,11 +195,11 @@ public class Main {
             String type = scanner.nextLine();
             switch (type.toUpperCase()) {
                 case "T":
-                    return  TaskType.TASK;
+                    return TaskType.TASK;
                 case "E":
-                    return  TaskType.EPIC;
+                    return TaskType.EPIC;
                 case "S":
-                    return  TaskType.SUBTASK;
+                    return TaskType.SUBTASK;
                 default:
                     System.out.print("Ошибка!  Введите тип задачи Обычная [T], Эпик [E], Подзадача [S] ");
             }
@@ -290,6 +298,93 @@ public class Main {
                 TaskStatus.IN_PROGRESS, epic2.getTaskID());
         manager.addSubtask(subtask4);
 
+    }
+
+    public static void printHistory(TaskManager manager) {
+
+        for (Task task : manager.getHistory()) {
+            System.out.println(task);
+        }
+
+    }
+
+    public static void updateTaskLogic(Scanner scanner, TaskManager manager) {
+        System.out.println("Введите ID задачи для обновления:");
+        int taskId = scanner.nextInt();
+        scanner.nextLine();
+
+        Task existingTask = manager.getTaskById(taskId);
+        if (existingTask == null) {
+            System.out.println("Задача с ID " + taskId + " не найдена!");
+            return;
+        }
+
+        System.out.println("Введите новое название задачи (текущее: '" + existingTask.getName() + "'):");
+        String newName = scanner.nextLine();
+
+        System.out.println("Введите новое описание задачи (текущее: '" + existingTask.getDescription() + "'):");
+        String newDescription = scanner.nextLine();
+
+        System.out.println("Выберите новый статус задачи:");
+        TaskStatus newStatus = chooseStatus(scanner);
+
+        Task updatedTask = new Task(newName, newDescription, newStatus);
+        updatedTask.setTaskID(taskId);
+        manager.updateTask(updatedTask);
+        System.out.println("Задача обновлена!");
+    }
+
+    private static void updateEpicLogic(Scanner scanner, TaskManager manager) {
+        System.out.println("Введите ID эпика для обновления:");
+        int epicId = scanner.nextInt();
+        scanner.nextLine();
+
+        Epic existingEpic = manager.getEpicById(epicId);
+        if (existingEpic == null) {
+            System.out.println("Эпик с ID " + epicId + " не найден!");
+            return;
+        }
+
+        System.out.println("Введите новое название эпика (текущее: '" + existingEpic.getName() + "'):");
+        String newName = scanner.nextLine();
+
+        System.out.println("Введите новое описание эпика (текущее: '" + existingEpic.getDescription() + "'):");
+        String newDescription = scanner.nextLine();
+
+        Epic updatedEpic = new Epic(newName, newDescription);
+        updatedEpic.setTaskID(epicId);
+        manager.updateEpic(updatedEpic);
+        System.out.println("Эпик обновлен!");
+    }
+
+    private static void updateSubtaskLogic(Scanner scanner, TaskManager manager) {
+        System.out.println("Введите ID подзадачи для обновления:");
+        int subtaskId = scanner.nextInt();
+        scanner.nextLine();
+
+        Subtask existingSubtask = manager.getSubtaskById(subtaskId);
+        if (existingSubtask == null) {
+            System.out.println("Подзадача с ID " + subtaskId + " не найдена!");
+            return;
+        }
+
+        System.out.println("Введите новое название подзадачи (текущее: '" + existingSubtask.getName() + "'):");
+        String newName = scanner.nextLine();
+
+        System.out.println("Введите новое описание подзадачи (текущее: '" + existingSubtask.getDescription() + "'):");
+        String newDescription = scanner.nextLine();
+
+        System.out.println("Выберите новый статус подзадачи:");
+        TaskStatus newStatus = chooseStatus(scanner);
+
+        System.out.println("Введите новый Epic ID (текущий: " + existingSubtask.getEpicID() + "):");
+        int newEpicId = scanner.nextInt();
+        scanner.nextLine();
+
+        Subtask updatedSubtask = new Subtask(newName, newDescription, newStatus, newEpicId);
+        updatedSubtask.setTaskID(subtaskId);
+        manager.updateSubtask(updatedSubtask);
+        System.out.println("Подзадача обновлена!");
     }
 
 
