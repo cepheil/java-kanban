@@ -334,7 +334,7 @@ public class Main {
         System.out.println("Задача обновлена!");
     }
 
-    private static void updateEpicLogic(Scanner scanner, TaskManager manager) {
+    public static void updateEpicLogic(Scanner scanner, TaskManager manager) {
         System.out.println("Введите ID эпика для обновления:");
         int epicId = scanner.nextInt();
         scanner.nextLine();
@@ -357,7 +357,7 @@ public class Main {
         System.out.println("Эпик обновлен!");
     }
 
-    private static void updateSubtaskLogic(Scanner scanner, TaskManager manager) {
+    public static void updateSubtaskLogic(Scanner scanner, TaskManager manager) {
         System.out.println("Введите ID подзадачи для обновления:");
         int subtaskId = scanner.nextInt();
         scanner.nextLine();
