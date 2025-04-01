@@ -39,4 +39,9 @@ public class Epic extends model.Task {
     public void clearSubtaskIdList () {
         this.subtaskIdList.clear();
     }
+
+    @Override
+    public TaskType getType() {
+        return TaskType.EPIC;
+    }
 }

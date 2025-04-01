@@ -18,6 +18,11 @@ public class Subtask extends model.Task {
 
 
     @Override
+    public TaskType getType() {
+        return TaskType.SUBTASK;
+    }
+
+    @Override
     public void setTaskID(int taskID) {
         super.setTaskID(taskID);
     }

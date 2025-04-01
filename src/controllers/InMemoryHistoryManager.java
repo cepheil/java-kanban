@@ -3,13 +3,14 @@ package controllers;
 import model.Epic;
 import model.Subtask;
 import model.Task;
+import util.TaskType;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class InMemoryHistoryManager implements HistoryManager {
 
-    ArrayList<Task> historyList = new ArrayList<>();
+    private ArrayList<Task> historyList = new ArrayList<>();
 
     @Override
     public void updateHistory(Task task) {
@@ -27,7 +28,8 @@ public class InMemoryHistoryManager implements HistoryManager {
     }
 
     private Task copyTask(Task task) {
-        if (task instanceof Epic) {
+        TaskType type = task.getType();
+        if (type == TaskType.EPIC) {
             Epic epic = (Epic) task;
             Epic copyEpic = new Epic(epic.getName(), epic.getDescription());
             copyEpic.setTaskID(epic.getTaskID());
@@ -38,7 +40,7 @@ public class InMemoryHistoryManager implements HistoryManager {
                 copyEpic.setSubtaskIdList(new ArrayList<>());
             }
             return copyEpic;
-        } else if (task instanceof Subtask) {
+        } else if (type == TaskType.SUBTASK) {
             Subtask subtask = (Subtask) task;
             Subtask copySubtask = new Subtask(subtask.getName(), subtask.getDescription(), subtask.getStatus(),
                     subtask.getEpicID());

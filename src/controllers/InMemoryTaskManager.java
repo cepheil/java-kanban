@@ -78,9 +78,11 @@ public class InMemoryTaskManager implements TaskManager {
     //c. Получение по идентификатору.
     @Override
     public Task getTaskById(int taskId) {
-
-        historyManager.updateHistory(tasks.get(taskId));
-        return tasks.get(taskId);
+        Task task = tasks.get(taskId);
+        if(task != null) {
+            historyManager.updateHistory(task);
+        }
+        return task;
     }
 
     //c. Получение по идентификатору.
@@ -96,8 +98,11 @@ public class InMemoryTaskManager implements TaskManager {
     //c. Получение по идентификатору.
     @Override
     public Subtask getSubtaskById(int taskId) {
-        historyManager.updateHistory(subtasks.get(taskId));
-        return subtasks.get(taskId);
+        Subtask subtask = subtasks.get(taskId);
+        if(subtask != null) {
+            historyManager.updateHistory(subtask);
+        }
+        return subtask;
     }
 
 
