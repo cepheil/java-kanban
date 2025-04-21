@@ -2,13 +2,13 @@ package controllers;
 
 import java.util.Objects;
 
-class Node <T> {
+class Node<T> {
 
     private T data;
     private Node<T> next;
     private Node<T> prev;
 
-    public Node(Node <T> prev, T data, Node <T> next) {
+    public Node(Node<T> prev, T data, Node<T> next) {
         this.data = data;
         this.next = next;
         this.prev = prev;
