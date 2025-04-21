@@ -2,6 +2,7 @@ package model;
 
 import util.TaskStatus;
 import util.TaskType;
+
 import java.util.Objects;
 
 public class Task {
@@ -24,7 +25,6 @@ public class Task {
     public TaskType getType() {
         return TaskType.TASK;
     }
-
 
 
     public void setTaskID(int taskID) {
@@ -62,7 +62,7 @@ public class Task {
     @Override
     public String toString() {
         return "[" + taskType + "]" + " [ID:" + taskID + "]" +
-                " name: " + name + " [" + status + "] "  +
+                " name: " + name + " [" + status + "] " +
                 "Description: " + description + "\n";
     }
 

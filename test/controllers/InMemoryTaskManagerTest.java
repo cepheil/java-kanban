@@ -331,11 +331,9 @@ class InMemoryTaskManagerTest {
         int epicID = subtask.getEpicID();
         taskManager.removeTaskById(subTaskId);
         Epic epic = taskManager.getEpicById(epicID);
-        assertFalse(epic.getSubtaskIdList().contains(subTaskId),"Ошибка! ID не должно быть в списке" );
+        assertFalse(epic.getSubtaskIdList().contains(subTaskId), "Ошибка! ID не должно быть в списке");
 
     }
-
-
 
 
 }

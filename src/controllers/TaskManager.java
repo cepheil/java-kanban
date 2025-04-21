@@ -64,5 +64,5 @@ public interface TaskManager {
     //b. Для эпиков: Управление статусами
     void updEpicStatus(Epic epic);
 
-    HashMap<Integer,Subtask> getSubtasksMap();
+    HashMap<Integer, Subtask> getSubtasksMap();
 }

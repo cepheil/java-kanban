@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="830ab6ca-d4df-494b-a93f-ee04c930bdcd" name="Changes" comment="подправить code style" />
+    <list default="true" id="830ab6ca-d4df-494b-a93f-ee04c930bdcd" name="Changes" comment="подправить code style">
+      <change beforePath="$PROJECT_DIR$/src/controllers/Node.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/Node.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -45,7 +47,7 @@
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Application.Main.executor": "Run",
     "Downloaded.Files.Path.Enabled": "true",
-    "JUnit.All in java-kanban.executor": "Coverage",
+    "JUnit.All in java-kanban.executor": "Debug",
     "JUnit.InMemoryTaskManagerTest.EpicShouldNotAddToSubtask.executor": "Run",
     "JUnit.InMemoryTaskManagerTest.addNewTask.executor": "Run",
     "JUnit.InMemoryTaskManagerTest.epicSubtaskIDsListDoNotContainSubtaskIDAfterRemove.executor": "Run",
@@ -227,7 +229,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745270999823</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="подправить code style">
+      <option name="closed" value="true" />
+      <created>1745271371892</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1745271371892</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

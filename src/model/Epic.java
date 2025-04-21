@@ -36,7 +36,8 @@ public class Epic extends model.Task {
     public void removeSubtaskId(int subtaskId) {
         this.subtaskIdList.remove(Integer.valueOf(subtaskId));
     }
-    public void clearSubtaskIdList () {
+
+    public void clearSubtaskIdList() {
         this.subtaskIdList.clear();
     }
 

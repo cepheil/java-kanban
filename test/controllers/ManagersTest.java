@@ -35,7 +35,7 @@ class ManagersTest {
         List<Task> history = historyManager.getHistory();
 
         assertEquals(1, history.size(), "Ошибка. история должна содержать одну задачу");
-        assertEquals (task,history.get(0),"Ошибка. задачи не совпадают");
+        assertEquals(task, history.get(0), "Ошибка. задачи не совпадают");
 
     }
 }
