@@ -6,26 +6,142 @@ import model.Task;
 import util.TaskType;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
+/**
+ * Реализация {@link HistoryManager}, хранящая историю просмотров задач.
+ * Использует двусвязный список для сохранения порядка и {@link HashMap} для быстрого доступа к узлам.
+ * При добавлении задачи создается её копия, чтобы зафиксировать состояние на момент просмотра.
+ */
 
 public class InMemoryHistoryManager implements HistoryManager {
 
-    private ArrayList<Task> historyList = new ArrayList<>();
+    private HashMap<Integer, Node<Task>> historyMap = new HashMap<>();
+    private final HistoryManagerLinkList<Task> historyLinkList = new HistoryManagerLinkList<>();
+
+
+    /**
+     * Вложенный класс для управления двусвязным списком задач.
+     * Хранит ссылки на первый ({@code head}) и последний ({@code tail}) элементы списка,
+     * а также текущий размер списка ({@code size}).
+     */
+    private class HistoryManagerLinkList<Task> {
+        private Node<Task> head;
+        private Node<Task> tail;
+        private int size = 0;
+
+        public void linkLast(Task task) {
+            final Node<Task> oldTail = tail;
+            final Node<Task> newNode = new Node<>(tail, task, null);
+            tail = newNode;
+            if (oldTail == null)
+                this.head = newNode;
+            else {
+                oldTail.setNext(newNode);
+            }
+            this.size++;
+        }
+
+        public List<Task> getTasks() {
+            List<Task> result = new ArrayList<>(size);
+            Node<Task> current = head;
+            while (current != null) {
+                result.add(current.getData());
+                current = current.getNext();
+            }
+            return result;
+        }
+
+        public Node<Task> getHead() {
+            return head;
+        }
+
+        public Node<Task> getTail() {
+            return tail;
+        }
+
+        public int getSize() {
+            return size;
+        }
+
+        private void setHead(Node<Task> head) {
+            this.head = head;
+        }
+
+        private void setTail(Node<Task> tail) {
+            this.tail = tail;
+        }
+
+        private void setSize(int size) {
+            this.size = size;
+        }
+    }
+
+    /**
+     * Удаляет узел из двусвязного списка.
+     * Обновляет ссылки соседних узлов ({@code prev} и {@code next}).
+     *
+     * @param node Узел для удаления. Если {@code null}, метод завершается без изменений.
+     */
+    private void removeNode(Node<Task> node) {
+        if (node == null) return;
+        Node<Task> prev = node.getPrev();
+        Node<Task> next = node.getNext();
+
+        if (prev == null) {
+            historyLinkList.setHead(next);
+        } else {
+            prev.setNext(next);
+        }
+        if (next == null) {
+            historyLinkList.setTail(prev);
+        } else {
+            next.setPrev(prev);
+        }
+        historyLinkList.setSize(historyLinkList.getSize() - 1);
+    }
+
+    /**
+     * Добавляет копию задачи в историю просмотров.
+     * Если задача уже присутствует в истории, её предыдущая версия удаляется, новая версия добавляется в конец.
+     *
+     * @param task Задача для добавления. Не может быть {@code null}.
+     */
 
     @Override
-    public void updateHistory(Task task) {
+    public void add(Task task) {
         Task taskCopy = copyTask(task);
+        int id = taskCopy.getTaskID();
 
-        if (historyList.size() >= 10) {
-            historyList.remove(0);
-        }
-        historyList.add(taskCopy);
+        remove(id);
+
+        historyLinkList.linkLast(taskCopy);
+        Node<Task> newNode = historyLinkList.getTail();
+        historyMap.put(id, newNode);
+
     }
 
     @Override
     public List<Task> getHistory() {
-        return new ArrayList<>(historyList);
+        return historyLinkList.getTasks();
     }
+
+    @Override
+    public void remove(int id) {
+        if (historyMap.containsKey(id)) {
+            Node<Task> node = historyMap.get(id);
+            removeNode(node);
+            historyMap.remove(id);
+        }
+    }
+
+    /**
+     * Создает глубокую копию задачи, чтобы зафиксировать её состояние на момент добавления в историю.
+     *
+     * @param task Исходная задача для копирования.
+     * @return Копия задачи.
+     */
 
     private Task copyTask(Task task) {
         TaskType type = task.getType();
