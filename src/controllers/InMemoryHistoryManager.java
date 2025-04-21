@@ -26,14 +26,14 @@ public class InMemoryHistoryManager implements HistoryManager {
      * Хранит ссылки на первый ({@code head}) и последний ({@code tail}) элементы списка,
      * а также текущий размер списка ({@code size}).
      */
-    private class HistoryManagerLinkList<Task> {
-        private Node<Task> head;
-        private Node<Task> tail;
+    private class HistoryManagerLinkList<T> {
+        private Node<T> head;
+        private Node<T> tail;
         private int size = 0;
 
-        public void linkLast(Task task) {
-            final Node<Task> oldTail = tail;
-            final Node<Task> newNode = new Node<>(tail, task, null);
+        public void linkLast(T task) {
+            final Node<T> oldTail = tail;
+            final Node<T> newNode = new Node<>(tail, task, null);
             tail = newNode;
             if (oldTail == null)
                 this.head = newNode;
@@ -43,9 +43,9 @@ public class InMemoryHistoryManager implements HistoryManager {
             this.size++;
         }
 
-        public List<Task> getTasks() {
-            List<Task> result = new ArrayList<>(size);
-            Node<Task> current = head;
+        public List<T> getTasks() {
+            List<T> result = new ArrayList<>(size);
+            Node<T> current = head;
             while (current != null) {
                 result.add(current.getData());
                 current = current.getNext();
@@ -53,11 +53,11 @@ public class InMemoryHistoryManager implements HistoryManager {
             return result;
         }
 
-        public Node<Task> getHead() {
+        public Node<T> getHead() {
             return head;
         }
 
-        public Node<Task> getTail() {
+        public Node<T> getTail() {
             return tail;
         }
 
@@ -65,11 +65,11 @@ public class InMemoryHistoryManager implements HistoryManager {
             return size;
         }
 
-        private void setHead(Node<Task> head) {
+        private void setHead(Node<T> head) {
             this.head = head;
         }
 
-        private void setTail(Node<Task> tail) {
+        private void setTail(Node<T> tail) {
             this.tail = tail;
         }
 
