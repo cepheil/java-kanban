@@ -55,7 +55,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public HashMap<Integer, Subtask> getSubtasksMap() {
-        HashMap<Integer, Subtask> subtasksMap  = new HashMap<>(subtasks);
+        HashMap<Integer, Subtask> subtasksMap = new HashMap<>(subtasks);
         return subtasksMap;
     }
 
@@ -84,7 +84,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public Task getTaskById(int taskId) {
         Task task = tasks.get(taskId);
-        if(task != null) {
+        if (task != null) {
             historyManager.add(task);
         }
         return task;
@@ -104,7 +104,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public Subtask getSubtaskById(int taskId) {
         Subtask subtask = subtasks.get(taskId);
-        if(subtask != null) {
+        if (subtask != null) {
             historyManager.add(subtask);
         }
         return subtask;
@@ -134,11 +134,11 @@ public class InMemoryTaskManager implements TaskManager {
     public int addSubtask(Subtask newSubtask) {
         final int id = generateId();
         newSubtask.setTaskID(id);
-        if(!(epics.containsKey(newSubtask.getEpicID()))){
+        if (!(epics.containsKey(newSubtask.getEpicID()))) {
             return -3; // Ошибка эпика с таким EpicID не существует.
         }
 
-        if(newSubtask.getEpicID() == newSubtask.getTaskID()){
+        if (newSubtask.getEpicID() == newSubtask.getTaskID()) {
             return -2;  //ошибка подзадача не может стать своим эпиком.
         }
         subtasks.put(id, newSubtask);
