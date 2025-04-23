@@ -5,7 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="830ab6ca-d4df-494b-a93f-ee04c930bdcd" name="Changes" comment="подправить code style">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/InMemoryHistoryManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/InMemoryHistoryManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/InMemoryTaskManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/InMemoryTaskManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controllers/Node.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/Node.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/Epic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Epic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/Subtask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Subtask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Task.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,7 +53,7 @@
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Application.Main.executor": "Run",
     "Downloaded.Files.Path.Enabled": "true",
-    "JUnit.All in java-kanban.executor": "Debug",
+    "JUnit.All in java-kanban.executor": "Coverage",
     "JUnit.InMemoryTaskManagerTest.EpicShouldNotAddToSubtask.executor": "Run",
     "JUnit.InMemoryTaskManagerTest.addNewTask.executor": "Run",
     "JUnit.InMemoryTaskManagerTest.epicSubtaskIDsListDoNotContainSubtaskIDAfterRemove.executor": "Run",
@@ -237,7 +243,23 @@
       <option name="project" value="LOCAL" />
       <updated>1745271371892</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="подправить code style">
+      <option name="closed" value="true" />
+      <created>1745271492051</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1745271492051</updated>
+    </task>
+    <task id="LOCAL-00011" summary="подправить code style">
+      <option name="closed" value="true" />
+      <created>1745271717364</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1745271717364</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -274,6 +296,6 @@
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/java_kanban$All_in_java_kanban.ic" NAME="All in java-kanban Coverage Results" MODIFIED="1745268164102" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/java_kanban$All_in_java_kanban.ic" NAME="All in java-kanban Coverage Results" MODIFIED="1745362842962" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
   </component>
 </project>

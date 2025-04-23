@@ -21,11 +21,20 @@ public class Task {
         this.taskType = TaskType.TASK;
     }
 
+    //конструктор для копирования задач
+    public Task(Task other) {
+        this.name = other.name;
+        this.description = other.description;
+        this.status = other.status;
+        this.taskType = other.taskType;
+        this.taskID = other.taskID;
+
+    }
+
 
     public TaskType getType() {
         return TaskType.TASK;
     }
-
 
     public void setTaskID(int taskID) {
         this.taskID = taskID;

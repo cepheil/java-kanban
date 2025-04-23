@@ -6,9 +6,7 @@ import model.Task;
 import util.TaskStatus;
 import util.TaskType;
 
-import java.util.List;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 
 public class InMemoryTaskManager implements TaskManager {
     private HashMap<Integer, Task> tasks = new HashMap<>();
@@ -64,9 +62,18 @@ public class InMemoryTaskManager implements TaskManager {
     public void removeAllTasks(TaskType type) {
         switch (type) {
             case TASK:
+                Set<Integer> tasksIdSet = tasks.keySet();
+                for (Integer id : tasksIdSet) {
+                    historyManager.remove(id);
+                }
                 tasks.clear();
                 break;
             case EPIC:
+                Set<Integer> idsSet = new HashSet<>(subtasks.keySet());
+                idsSet.addAll(epics.keySet());
+                for (Integer id : idsSet) {
+                    historyManager.remove(id);
+                }
                 subtasks.clear();
                 epics.clear();
                 break;
@@ -74,6 +81,10 @@ public class InMemoryTaskManager implements TaskManager {
                 for (Epic epic : epics.values()) {
                     epic.clearSubtaskIdList();
                     updEpicStatus(epic);
+                }
+                Set<Integer> subtasksIdSet = subtasks.keySet();
+                for (Integer id : subtasksIdSet) {
+                    historyManager.remove(id);
                 }
                 subtasks.clear();
                 break;
@@ -84,30 +95,36 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public Task getTaskById(int taskId) {
         Task task = tasks.get(taskId);
-        if (task != null) {
-            historyManager.add(task);
+        if (task == null) {
+            return null;
         }
-        return task;
+        historyManager.add(task);
+        Task copyTask = new Task(task);
+        return copyTask;
     }
 
     //c. Получение по идентификатору.
     @Override
     public Epic getEpicById(int taskId) {
         Epic epic = epics.get(taskId);
-        if (epic != null) {
-            historyManager.add(epic);
+        if (epic == null) {
+            return null;
         }
-        return epic;
+        historyManager.add(epic);
+        Epic copyEpic = new Epic(epic);
+        return copyEpic;
     }
 
     //c. Получение по идентификатору.
     @Override
     public Subtask getSubtaskById(int taskId) {
         Subtask subtask = subtasks.get(taskId);
-        if (subtask != null) {
-            historyManager.add(subtask);
+        if (subtask == null) {
+            return null;
         }
-        return subtask;
+        historyManager.add(subtask);
+        Subtask copySubtask = new Subtask(subtask);
+        return copySubtask;
     }
 
 
@@ -251,6 +268,5 @@ public class InMemoryTaskManager implements TaskManager {
         }
         epic.setStatus(result);
     }
-
 
 }

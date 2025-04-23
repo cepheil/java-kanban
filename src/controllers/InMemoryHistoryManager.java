@@ -18,88 +18,46 @@ import java.util.List;
 public class InMemoryHistoryManager implements HistoryManager {
 
     private HashMap<Integer, Node<Task>> historyMap = new HashMap<>();
-    private final HistoryManagerLinkList<Task> historyLinkList = new HistoryManagerLinkList<>();
+    private Node<Task> head;
+    private Node<Task> tail;
 
 
-    /**
-     * Вложенный класс для управления двусвязным списком задач.
-     * Хранит ссылки на первый ({@code head}) и последний ({@code tail}) элементы списка,
-     * а также текущий размер списка ({@code size}).
-     */
-    private class HistoryManagerLinkList<T> {
-        private Node<T> head;
-        private Node<T> tail;
-        private int size = 0;
-
-        public void linkLast(T task) {
-            final Node<T> oldTail = tail;
-            final Node<T> newNode = new Node<>(tail, task, null);
-            tail = newNode;
-            if (oldTail == null)
-                this.head = newNode;
-            else {
-                oldTail.setNext(newNode);
-            }
-            this.size++;
-        }
-
-        public List<T> getTasks() {
-            List<T> result = new ArrayList<>(size);
-            Node<T> current = head;
-            while (current != null) {
-                result.add(current.getData());
-                current = current.getNext();
-            }
-            return result;
-        }
-
-        public Node<T> getHead() {
-            return head;
-        }
-
-        public Node<T> getTail() {
-            return tail;
-        }
-
-        public int getSize() {
-            return size;
-        }
-
-        private void setHead(Node<T> head) {
-            this.head = head;
-        }
-
-        private void setTail(Node<T> tail) {
-            this.tail = tail;
-        }
-
-        private void setSize(int size) {
-            this.size = size;
+    private void linkLast(Task task) {
+        final Node<Task> oldTail = tail;
+        final Node<Task> newNode = new Node<>(tail, task, null);
+        tail = newNode;
+        if (oldTail == null)
+            this.head = newNode;
+        else {
+            oldTail.setNext(newNode);
         }
     }
 
-    /**
-     * Удаляет узел из двусвязного списка.
-     * Обновляет ссылки соседних узлов ({@code prev} и {@code next}).
-     *
-     * @param node Узел для удаления. Если {@code null}, метод завершается без изменений.
-     */
+    private List<Task> getTasks() {
+        List<Task> result = new ArrayList<>(historyMap.size());
+        Node<Task> current = head;
+        while (current != null) {
+            result.add(current.getData());
+            current = current.getNext();
+        }
+        return result;
+    }
+
     private void removeNode(Node<Task> node) {
         if (node == null) return;
         Node<Task> prev = node.getPrev();
         Node<Task> next = node.getNext();
 
         if (prev == null) {
-            historyLinkList.setHead(next);
+            head = next;
         } else {
             prev.setNext(next);
         }
         if (next == null) {
-            historyLinkList.setTail(prev);
+            tail = prev;
         } else {
             next.setPrev(prev);
         }
-        historyLinkList.setSize(historyLinkList.getSize() - 1);
     }
 
     /**
@@ -108,23 +66,20 @@ public class InMemoryHistoryManager implements HistoryManager {
      *
      * @param task Задача для добавления. Не может быть {@code null}.
      */
-
     @Override
     public void add(Task task) {
         Task taskCopy = copyTask(task);
         int id = taskCopy.getTaskID();
 
         remove(id);
-
-        historyLinkList.linkLast(taskCopy);
-        Node<Task> newNode = historyLinkList.getTail();
+        linkLast(taskCopy);
+        Node<Task> newNode = tail;
         historyMap.put(id, newNode);
-
     }
 
     @Override
     public List<Task> getHistory() {
-        return historyLinkList.getTasks();
+        return getTasks();
     }
 
     @Override
@@ -142,7 +97,6 @@ public class InMemoryHistoryManager implements HistoryManager {
      * @param task Исходная задача для копирования.
      * @return Копия задачи.
      */
-
     private Task copyTask(Task task) {
         TaskType type = task.getType();
         if (type == TaskType.EPIC) {
@@ -168,6 +122,4 @@ public class InMemoryHistoryManager implements HistoryManager {
             return copyTask;
         }
     }
-
-
 }

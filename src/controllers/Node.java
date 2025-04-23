@@ -2,13 +2,13 @@ package controllers;
 
 import java.util.Objects;
 
-class Node<T> {
+class Node<Task> {
 
-    private T data;
-    private Node<T> next;
-    private Node<T> prev;
+    private Task data;
+    private Node<Task> next;
+    private Node<Task> prev;
 
-    public Node(Node<T> prev, T data, Node<T> next) {
+    public Node(Node<Task> prev, Task data, Node<Task> next) {
         this.data = data;
         this.next = next;
         this.prev = prev;
@@ -27,27 +27,23 @@ class Node<T> {
         return Objects.hash(data, next, prev);
     }
 
-    public T getData() {
+    public Task getData() {
         return data;
     }
 
-    public void setData(T data) {
-        this.data = data;
-    }
-
-    public Node<T> getNext() {
+    public Node<Task> getNext() {
         return next;
     }
 
-    public void setNext(Node<T> next) {
-        this.next = next;
-    }
-
-    public Node<T> getPrev() {
+    public Node<Task> getPrev() {
         return prev;
     }
 
-    public void setPrev(Node<T> prev) {
+    void setNext(Node<Task> next) {
+        this.next = next;
+    }
+
+    void setPrev(Node<Task> prev) {
         this.prev = prev;
     }
 }
