@@ -6,9 +6,7 @@ import model.Task;
 import util.TaskStatus;
 import util.TaskType;
 
-import java.util.List;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 
 public class InMemoryTaskManager implements TaskManager {
     private HashMap<Integer, Task> tasks = new HashMap<>();
@@ -20,7 +18,6 @@ public class InMemoryTaskManager implements TaskManager {
     public InMemoryTaskManager(HistoryManager historyManager) {
         this.historyManager = historyManager;
     }
-
 
     @Override
     public List<Task> getHistory() {
@@ -36,22 +33,28 @@ public class InMemoryTaskManager implements TaskManager {
     // a. Получение списка всех задач. Task
     @Override
     public ArrayList<Task> getTasks() {
-        ArrayList<Task> tasksList = new ArrayList<>(tasks.values());  // нужно ли добавлять в хистори?
+        ArrayList<Task> tasksList = new ArrayList<>(tasks.values());
         return tasksList;
     }
 
     // a. Получение списка всех задач. Epic
     @Override
     public ArrayList<Epic> getEpics() {
-        ArrayList<Epic> epicsList = new ArrayList<>(epics.values()); // нужно ли добавлять в хистори?
+        ArrayList<Epic> epicsList = new ArrayList<>(epics.values());
         return epicsList;
     }
 
     // a. Получение списка всех задач. Subtask
     @Override
     public ArrayList<Subtask> getSubtasks() {
-        ArrayList<Subtask> subtasksList = new ArrayList<>(subtasks.values());  // нужно ли добавлять в хистори?
+        ArrayList<Subtask> subtasksList = new ArrayList<>(subtasks.values());
         return subtasksList;
+    }
+
+    @Override
+    public HashMap<Integer, Subtask> getSubtasksMap() {
+        HashMap<Integer, Subtask> subtasksMap = new HashMap<>(subtasks);
+        return subtasksMap;
     }
 
     //b. Удаление всех задач.
@@ -59,9 +62,18 @@ public class InMemoryTaskManager implements TaskManager {
     public void removeAllTasks(TaskType type) {
         switch (type) {
             case TASK:
+                Set<Integer> tasksIdSet = tasks.keySet();
+                for (Integer id : tasksIdSet) {
+                    historyManager.remove(id);
+                }
                 tasks.clear();
                 break;
             case EPIC:
+                Set<Integer> idsSet = new HashSet<>(subtasks.keySet());
+                idsSet.addAll(epics.keySet());
+                for (Integer id : idsSet) {
+                    historyManager.remove(id);
+                }
                 subtasks.clear();
                 epics.clear();
                 break;
@@ -69,6 +81,10 @@ public class InMemoryTaskManager implements TaskManager {
                 for (Epic epic : epics.values()) {
                     epic.clearSubtaskIdList();
                     updEpicStatus(epic);
+                }
+                Set<Integer> subtasksIdSet = subtasks.keySet();
+                for (Integer id : subtasksIdSet) {
+                    historyManager.remove(id);
                 }
                 subtasks.clear();
                 break;
@@ -79,30 +95,36 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public Task getTaskById(int taskId) {
         Task task = tasks.get(taskId);
-        if(task != null) {
-            historyManager.updateHistory(task);
+        if (task == null) {
+            return null;
         }
-        return task;
+        historyManager.add(task);
+        Task copyTask = new Task(task);
+        return copyTask;
     }
 
     //c. Получение по идентификатору.
     @Override
     public Epic getEpicById(int taskId) {
         Epic epic = epics.get(taskId);
-        if (epic != null) {
-            historyManager.updateHistory(epic);
+        if (epic == null) {
+            return null;
         }
-        return epic;
+        historyManager.add(epic);
+        Epic copyEpic = new Epic(epic);
+        return copyEpic;
     }
 
     //c. Получение по идентификатору.
     @Override
     public Subtask getSubtaskById(int taskId) {
         Subtask subtask = subtasks.get(taskId);
-        if(subtask != null) {
-            historyManager.updateHistory(subtask);
+        if (subtask == null) {
+            return null;
         }
-        return subtask;
+        historyManager.add(subtask);
+        Subtask copySubtask = new Subtask(subtask);
+        return copySubtask;
     }
 
 
@@ -129,11 +151,11 @@ public class InMemoryTaskManager implements TaskManager {
     public int addSubtask(Subtask newSubtask) {
         final int id = generateId();
         newSubtask.setTaskID(id);
-        if(!(epics.containsKey(newSubtask.getEpicID()))){
+        if (!(epics.containsKey(newSubtask.getEpicID()))) {
             return -3; // Ошибка эпика с таким EpicID не существует.
         }
 
-        if(newSubtask.getEpicID() == newSubtask.getTaskID()){
+        if (newSubtask.getEpicID() == newSubtask.getTaskID()) {
             return -2;  //ошибка подзадача не может стать своим эпиком.
         }
         subtasks.put(id, newSubtask);
@@ -174,12 +196,14 @@ public class InMemoryTaskManager implements TaskManager {
     public void removeTaskById(int taskId) {
         if (tasks.containsKey(taskId)) {
             tasks.remove(taskId);
+            historyManager.remove(taskId);
             return;
         }
 
         if (subtasks.containsKey(taskId)) {
             int epicId = subtasks.get(taskId).getEpicID();
             subtasks.remove(taskId);
+            historyManager.remove(taskId);
             Epic epic = epics.get(epicId);
 
             if (epic != null) {
@@ -194,8 +218,10 @@ public class InMemoryTaskManager implements TaskManager {
             ArrayList<Integer> subtaskIdList = new ArrayList<>(epic.getSubtaskIdList()); // получаем ID подзадач Эпика
             for (Integer subtaskId : subtaskIdList) {
                 subtasks.remove(subtaskId);
+                historyManager.remove(subtaskId);
             }
             epics.remove(taskId);
+            historyManager.remove(taskId);
         }
     }
 
@@ -242,6 +268,5 @@ public class InMemoryTaskManager implements TaskManager {
         }
         epic.setStatus(result);
     }
-
 
 }

@@ -9,7 +9,7 @@ class EpicTest {
 
 
     @Test
-    void tasksWithSameIdShouldBeEqual()  {
+    void tasksWithSameIdShouldBeEqual() {
 
         Epic epic1 = new Epic("Test Epic", "Test Epic description");
         epic1.setTaskID(1);
@@ -19,7 +19,6 @@ class EpicTest {
 
         assertEquals(epic1, epic2, "Эпики с одинаковым id должны быть равны");
     }
-
 
 
 }

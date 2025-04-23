@@ -8,7 +8,7 @@ import static util.TaskStatus.NEW;
 class TaskTest {
 
     @Test
-    void tasksWithSameIdShouldBeEqual()  {
+    void tasksWithSameIdShouldBeEqual() {
 
         Task task1 = new Task("Test Task", "Test Task description", NEW);
         task1.setTaskID(1);

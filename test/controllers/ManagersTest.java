@@ -2,7 +2,6 @@ package controllers;
 
 import model.Task;
 import org.junit.jupiter.api.Test;
-import util.TaskStatus;
 
 import java.util.List;
 
@@ -32,11 +31,11 @@ class ManagersTest {
         assertNotNull(historyManager, "Менеджер истории не должен быть null");
 
         Task task = new Task("Test Task", "Test Task description", NEW);
-        historyManager.updateHistory(task);
+        historyManager.add(task);
         List<Task> history = historyManager.getHistory();
 
         assertEquals(1, history.size(), "Ошибка. история должна содержать одну задачу");
-        assertEquals (task,history.get(0),"Ошибка. задачи не совпадают");
+        assertEquals(task, history.get(0), "Ошибка. задачи не совпадают");
 
     }
 }

@@ -142,8 +142,46 @@ public class Main {
 
 
                 case "10":
-                    System.out.println("Печать истории");
                     printHistory(manager);
+                    break;
+
+                case "11":
+                    System.out.println("Запуск сценария ТЗ_6");
+                    addPreloadedTasks(manager); // загружены предустановленные задачи
+                    /////////////////////////////////////////////
+                    System.out.println("Запрашиваем задачу №2 :" + manager.getTaskById(2));
+                    System.out.println("Запрашиваем задачу №1 :" + manager.getTaskById(1));
+                    System.out.println("Запрашиваем подзадачу №7 :" + manager.getSubtaskById(7));
+                    System.out.println("Запрашиваем подзадачу №4 :" + manager.getSubtaskById(4));
+                    System.out.println("Запрашиваем эпик №10 :" + manager.getEpicById(10));
+                    printHistory(manager);
+
+                    System.out.println("Запрашиваем задачу №2 :" + manager.getTaskById(2));
+                    printHistory(manager);
+
+                    System.out.println("Запрашиваем задачу №1 :" + manager.getTaskById(1));
+                    System.out.println("Запрашиваем эпик №10 :" + manager.getEpicById(10));
+                    System.out.println("Запрашиваем эпик №3 :" + manager.getEpicById(3));
+                    System.out.println("Запрашиваем подзадачу №7 :" + manager.getSubtaskById(7));
+                    printHistory(manager);
+
+
+                    System.out.println("Удаляем задачу №1 :");
+                    manager.removeTaskById(1);
+                    printHistory(manager);
+
+                    System.out.println("Запрашиваем подзадачу №5 :" + manager.getSubtaskById(5));
+                    System.out.println("Запрашиваем эпик №6 :" + manager.getEpicById(6));
+                    System.out.println("Запрашиваем подзадачу №7 :" + manager.getSubtaskById(7));
+                    System.out.println("Запрашиваем подзадачу №9 :" + manager.getSubtaskById(9));
+                    System.out.println("Запрашиваем подзадачу №8 :" + manager.getSubtaskById(8));
+                    printHistory(manager);
+
+                    System.out.println("Запрашиваем задачу №2 :" + manager.getTaskById(2));
+                    System.out.println("Удаляем эпик №6 и его подзадачи:");
+                    manager.removeTaskById(6);
+                    printHistory(manager);
+
                     break;
 
                 case "0":
@@ -170,6 +208,7 @@ public class Main {
         System.out.println("8. Получение списка всех подзадач определённого эпика. по epicID");
         System.out.println("9. Загрузить предустановленные задачи");
         System.out.println("10. Печать истории");
+        System.out.println("11. Запустить сценарий ТЗ_6");
         System.out.println("0. ВЫХОД");
     }
 
@@ -255,10 +294,9 @@ public class Main {
                 if (!subtaskIds.isEmpty()) {
                     System.out.println("   Подзадачи:");
 
-
                     for (Integer subtaskId : subtaskIds) {
-                        Subtask subtask = manager.getSubtaskById(subtaskId);
-                        //Subtask subtask = subtasks.get(subtaskId);
+                        //Subtask subtask = manager.getSubtaskById(subtaskId); - наполняет историю подзадачаими.
+                        Subtask subtask = manager.getSubtasksMap().get(subtaskId); //изменен вывод через новый геттер.
                         if (subtask != null) {
                             System.out.println("   ↳ " + subtask);
                         } else {
@@ -275,32 +313,44 @@ public class Main {
 
 
     public static void addPreloadedTasks(TaskManager manager) {
-        Task task1 = new Task("Сходить в магазин", "Купить продукты на неделю.", TaskStatus.NEW);
+        Task task1 = new Task("Задача_1", "Описание Задачи_1", TaskStatus.NEW);
         manager.addTask(task1);
-        Task task2 = new Task("Обед", "Заказать еду через приложение", TaskStatus.IN_PROGRESS);
+        Task task2 = new Task("Задача_2", "Описание Задачи_2", TaskStatus.IN_PROGRESS);
         manager.addTask(task2);
 
-        Epic epic1 = new Epic("Поездка в Сочи", "Поездка в Сочи на горнолыжку");
+        Epic epic1 = new Epic("Эпик_1", "Описание Эпика_1");
         manager.addEpic(epic1);
-        Subtask subtask1 = new Subtask("Билеты на самолет", "Купить билеты в Сочи",
+        Subtask subtask1 = new Subtask("Подзадача_1", "Описание Подзадачи_1",
                 TaskStatus.NEW, epic1.getTaskID());
         manager.addSubtask(subtask1);
-        Subtask subtask2 = new Subtask("Отель в Сочи", "Выбрать подходящий отель и забронировать его",
+        Subtask subtask2 = new Subtask("Подзадача_2", "Описание Подзадачи_2",
                 TaskStatus.IN_PROGRESS, epic1.getTaskID());
         manager.addSubtask(subtask2);
 
-        Epic epic2 = new Epic("Обновление компьютера", "Заменить комплектующие пк");
+        Epic epic2 = new Epic("Эпик_2", "Описание Эпика_2");
         manager.addEpic(epic2);
-        Subtask subtask3 = new Subtask("купить видеокарту", "выбрать подходящую вк из серии 50..",
+        Subtask subtask3 = new Subtask("Подзадача_3", "Описание Подзадачи_3",
                 TaskStatus.NEW, epic2.getTaskID());
         manager.addSubtask(subtask3);
-        Subtask subtask4 = new Subtask("купить Блок Питания", "подобрать БП от 1200 Вт",
+        Subtask subtask4 = new Subtask("Подзадача_4", "Описание Подзадачи_4",
                 TaskStatus.IN_PROGRESS, epic2.getTaskID());
         manager.addSubtask(subtask4);
+        Subtask subtask5 = new Subtask("Подзадача_5", "Описание Подзадачи_5",
+                TaskStatus.DONE, epic2.getTaskID());
+        manager.addSubtask(subtask5);
+
+        Epic epic3 = new Epic("Эпик_3", "Описание Эпика_3");
+        manager.addEpic(epic3);
+
 
     }
 
     public static void printHistory(TaskManager manager) {
+        System.out.println("Печать истории:");
+
+        if (manager.getHistory().isEmpty()) {
+            System.out.println("История пустая.");
+        }
 
         for (Task task : manager.getHistory()) {
             System.out.println(task);

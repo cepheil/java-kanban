@@ -2,6 +2,7 @@ package model;
 
 import util.TaskStatus;
 import util.TaskType;
+
 import java.util.Objects;
 
 public class Task {
@@ -20,12 +21,20 @@ public class Task {
         this.taskType = TaskType.TASK;
     }
 
+    //конструктор для копирования задач
+    public Task(Task other) {
+        this.name = other.name;
+        this.description = other.description;
+        this.status = other.status;
+        this.taskType = other.taskType;
+        this.taskID = other.taskID;
+
+    }
+
 
     public TaskType getType() {
         return TaskType.TASK;
     }
-
-
 
     public void setTaskID(int taskID) {
         this.taskID = taskID;
@@ -62,7 +71,7 @@ public class Task {
     @Override
     public String toString() {
         return "[" + taskType + "]" + " [ID:" + taskID + "]" +
-                " name: " + name + " [" + status + "] "  +
+                " name: " + name + " [" + status + "] " +
                 "Description: " + description + "\n";
     }
 

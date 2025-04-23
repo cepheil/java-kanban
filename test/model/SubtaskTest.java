@@ -10,8 +10,9 @@ class SubtaskTest {
     @Test
     void getEpicID() {
     }
+
     @Test
-    void tasksWithSameIdShouldBeEqual()  {
+    void tasksWithSameIdShouldBeEqual() {
         Subtask subtask1 = new Subtask("Test Subtask", "Test Subtask description", NEW, 1);
         subtask1.setTaskID(1);
 

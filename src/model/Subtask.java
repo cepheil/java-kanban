@@ -12,10 +12,16 @@ public class Subtask extends model.Task {
         this.taskType = TaskType.SUBTASK;
     }
 
+    public Subtask(Subtask other) {
+        super(other);
+        this.epicID = other.epicID;
+        this.taskType = TaskType.SUBTASK;
+    }
+
+
     public int getEpicID() {
         return epicID;
     }
-
 
     @Override
     public TaskType getType() {

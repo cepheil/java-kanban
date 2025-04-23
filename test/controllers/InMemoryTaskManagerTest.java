@@ -11,8 +11,8 @@ import util.TaskType;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static util.TaskStatus.IN_PROGRESS;
-import static util.TaskStatus.NEW;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static util.TaskStatus.*;
 
 class InMemoryTaskManagerTest {
 
@@ -38,9 +38,8 @@ class InMemoryTaskManagerTest {
 
     @Test
     void updateAndGetHistory() {
-
         HistoryManager historyManager = Managers.getDefaultHistory();
-        historyManager.updateHistory(task);
+        historyManager.add(task);
         final List<Task> history = historyManager.getHistory();
 
         assertNotNull(history, "История  пустая.");
@@ -50,8 +49,6 @@ class InMemoryTaskManagerTest {
 
     @Test
     void removeAllTasks() {
-        taskManager.addSubtask(subtask);
-
         taskManager.removeAllTasks(TaskType.TASK);
         assertTrue(taskManager.getTasks().isEmpty(), "Ошибка! Список Task должен быть пуст");
 
@@ -172,7 +169,6 @@ class InMemoryTaskManagerTest {
         TaskStatus epicStatus = epic.getStatus();
         taskManager.getEpicById(epicId); // получаем эпик по id и записываем его в историю
 
-
         Epic epicUpdated = new Epic("Новый Эпик", "Новое описание Эпика");
         epicUpdated.setTaskID(epicId);
         epicUpdated.setStatus(IN_PROGRESS);
@@ -209,6 +205,134 @@ class InMemoryTaskManagerTest {
 
     @Test
     void removeTaskById() {
+        Task newTask = new Task("Test Task", "Test description", NEW);
+        Subtask newSubtask = new Subtask("Test Subtask_2", "Subtask_2 description", NEW, epicId);
+        Epic newEpic = new Epic("Test Epic", "Test Epic description");
+
+        int taskIdToDel = taskManager.addTask(newTask);
+        int subTaskIdToDel = taskManager.addTask(newSubtask);
+        int epicIdToDel = taskManager.addTask(newSubtask);
+
+
+        taskManager.removeTaskById(taskIdToDel);
+        Task removedTask = taskManager.getTaskById(taskIdToDel);
+
+        taskManager.removeTaskById(subTaskIdToDel);
+        Subtask removedSubTask = taskManager.getSubtaskById(subTaskIdToDel);
+
+        taskManager.removeTaskById(epicIdToDel);
+        Epic removedEpic = taskManager.getEpicById(epicIdToDel);
+
+        assertNotEquals(newTask, removedTask, "задачи не должны совпадать");
+        assertNotEquals(newSubtask, removedSubTask, "задачи не должны совпадать");
+        assertNotEquals(newEpic, removedEpic, "задачи не должны совпадать");
+    }
+
+
+    @Test
+    void updateTaskDoNotInfluenceToHistory() {
+
+        Task taskTest = new Task("Task", "Test description", NEW);
+        int taskTestId = taskManager.addTask(taskTest);
+
+        Epic epicTest = new Epic("Epic", "Test Epic description");
+        int epicTestId = taskManager.addEpic(epicTest);
+
+        Subtask subtaskTest = new Subtask("Subtask", "Test Subtask description", NEW, epicTestId);
+        int subtaskTestId = taskManager.addSubtask(subtaskTest);
+
+        Task taskToUpd = taskManager.getTaskById(taskTestId);
+        Epic epicToUpd = taskManager.getEpicById(epicTestId);
+        Subtask subtaskToUpd = taskManager.getSubtaskById(subtaskTestId);
+
+
+        taskToUpd.setName("TaskAfterUpd");
+        taskToUpd.setDescription("Task description After Upd");
+        taskToUpd.setStatus(DONE);
+
+        subtaskToUpd.setName("SubtaskAfterUpd");
+        subtaskToUpd.setDescription("Subtask description After Upd");
+        subtaskToUpd.setStatus(IN_PROGRESS);
+
+        epicToUpd.setName("EpicAfterUpd");
+        epicToUpd.setDescription("Epic description After Upd");
+
+        List<Task> history = taskManager.getHistory();
+
+        assertNotEquals(taskToUpd, history.get(0), "Задачи не должны совпадать");
+        assertNotEquals(epicToUpd, history.get(1), "Эпики не должны совпадать");
+        assertNotEquals(subtaskToUpd, history.get(2), "Подзадачи не должны совпадать");
+
+    }
+
+    @Test
+    void linkedListHistoryAddTests() {
+        int taskId = task.getTaskID();
+        int subTaskId = subtask.getTaskID();
+        int epicID = epicId;
+        List<Task> historyTest;
+
+        taskManager.getTaskById(taskId);
+        historyTest = taskManager.getHistory();
+
+
+        assertFalse(historyTest.isEmpty(), "История пуста");
+        assertNotNull(historyTest, "history = null.");
+
+        assertEquals(task, historyTest.get(0), "Задачи не совпадают");
+        assertEquals(1, historyTest.size(), "размер списка не равен 1");
+
+
+        taskManager.getSubtaskById(subTaskId);
+        historyTest = taskManager.getHistory();
+
+        assertEquals(subtask, historyTest.get(1), "Подзадачи не совпадают");
+        assertEquals(2, historyTest.size(), "размер списка не равен 2");
+
+
+        taskManager.getEpicById(epicID);
+        historyTest = taskManager.getHistory();
+
+        assertEquals(epic, historyTest.get(2), "Эпики не совпадают");
+        assertEquals(3, historyTest.size(), "размер списка не равен 3");
+
+
+        taskManager.getTaskById(taskId);
+        historyTest = taskManager.getHistory();
+
+        assertNotEquals(task, historyTest.get(0), "Ошибка! Задача не должна быть в начале списка");
+        assertEquals(task, historyTest.get(2), "Ошибка! Задача должна быть в конце списка");
+
+    }
+
+    @Test
+    void linkedListHistoryRemoveTests() {
+        int taskId = task.getTaskID();
+//        int subTaskId = subtask.getTaskID();
+//        int epicID = epicId;
+        List<Task> historyTest;
+
+        taskManager.getTaskById(taskId);
+        historyTest = taskManager.getHistory();
+
+        assertFalse(historyTest.isEmpty(), "Ошибка! История пуста");
+        assertNotNull(historyTest, "history = null.");
+
+
+        taskManager.removeTaskById(taskId);
+        historyTest = taskManager.getHistory();
+        assertTrue(historyTest.isEmpty(), "Ошибка! История НЕ пуста");
+
+    }
+
+    @Test
+    void epicSubtaskIDsListDoNotContainSubtaskIDAfterRemove() {
+        int subTaskId = subtask.getTaskID();
+        int epicID = subtask.getEpicID();
+        taskManager.removeTaskById(subTaskId);
+        Epic epic = taskManager.getEpicById(epicID);
+        assertFalse(epic.getSubtaskIdList().contains(subTaskId), "Ошибка! ID не должно быть в списке");
+
     }
 
 

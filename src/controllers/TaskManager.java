@@ -6,6 +6,7 @@ import model.Task;
 import util.TaskType;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public interface TaskManager {
@@ -62,4 +63,6 @@ public interface TaskManager {
 
     //b. Для эпиков: Управление статусами
     void updEpicStatus(Epic epic);
+
+    HashMap<Integer, Subtask> getSubtasksMap();
 }
