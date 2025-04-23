@@ -17,14 +17,14 @@ import java.util.List;
 
 public class InMemoryHistoryManager implements HistoryManager {
 
-    private HashMap<Integer, Node<Task>> historyMap = new HashMap<>();
-    private Node<Task> head;
-    private Node<Task> tail;
+    private HashMap<Integer, Node> historyMap = new HashMap<>();
+    private Node head;
+    private Node tail;
 
 
     private void linkLast(Task task) {
-        final Node<Task> oldTail = tail;
-        final Node<Task> newNode = new Node<>(tail, task, null);
+        final Node oldTail = tail;
+        final Node newNode = new Node(tail, task, null);
         tail = newNode;
         if (oldTail == null)
             this.head = newNode;
@@ -35,7 +35,7 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     private List<Task> getTasks() {
         List<Task> result = new ArrayList<>(historyMap.size());
-        Node<Task> current = head;
+        Node current = head;
         while (current != null) {
             result.add(current.getData());
             current = current.getNext();
@@ -43,10 +43,10 @@ public class InMemoryHistoryManager implements HistoryManager {
         return result;
     }
 
-    private void removeNode(Node<Task> node) {
+    private void removeNode(Node node) {
         if (node == null) return;
-        Node<Task> prev = node.getPrev();
-        Node<Task> next = node.getNext();
+        Node prev = node.getPrev();
+        Node next = node.getNext();
 
         if (prev == null) {
             head = next;
@@ -73,7 +73,7 @@ public class InMemoryHistoryManager implements HistoryManager {
 
         remove(id);
         linkLast(taskCopy);
-        Node<Task> newNode = tail;
+        Node newNode = tail;
         historyMap.put(id, newNode);
     }
 
@@ -85,7 +85,7 @@ public class InMemoryHistoryManager implements HistoryManager {
     @Override
     public void remove(int id) {
         if (historyMap.containsKey(id)) {
-            Node<Task> node = historyMap.get(id);
+            Node node = historyMap.get(id);
             removeNode(node);
             historyMap.remove(id);
         }

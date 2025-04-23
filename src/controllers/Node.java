@@ -1,14 +1,16 @@
 package controllers;
 
+import model.Task;
+
 import java.util.Objects;
 
-class Node<Task> {
+class Node {
 
     private Task data;
-    private Node<Task> next;
-    private Node<Task> prev;
+    private Node next;
+    private Node prev;
 
-    public Node(Node<Task> prev, Task data, Node<Task> next) {
+    public Node(Node prev, Task data, Node next) {
         this.data = data;
         this.next = next;
         this.prev = prev;
@@ -18,8 +20,10 @@ class Node<Task> {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Node<?> node = (Node<?>) o;
-        return Objects.equals(data, node.data) && Objects.equals(next, node.next) && Objects.equals(prev, node.prev);
+        Node node = (Node) o;
+        return Objects.equals(data, node.data)
+                && Objects.equals(next, node.next)
+                && Objects.equals(prev, node.prev);
     }
 
     @Override
@@ -31,19 +35,20 @@ class Node<Task> {
         return data;
     }
 
-    public Node<Task> getNext() {
+    public Node getNext() {
         return next;
     }
 
-    public Node<Task> getPrev() {
+    public Node getPrev() {
         return prev;
     }
 
-    void setNext(Node<Task> next) {
+    void setNext(Node next) {
         this.next = next;
     }
 
-    void setPrev(Node<Task> prev) {
+    void setPrev(Node prev) {
         this.prev = prev;
     }
+
 }
