@@ -4,18 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="830ab6ca-d4df-494b-a93f-ee04c930bdcd" name="Changes" comment=" fix:  InMemoryHistoryManager исправлен метод copyTask()&#10; fix:  InMemoryTaskManager добавлены проверки на null в методах getTaskById">
-      <change afterPath="$PROJECT_DIR$/src/controllers/FileBackedTaskManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/controllers/ManagerSaveException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/controllers/FileBackedTaskManagerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="830ab6ca-d4df-494b-a93f-ee04c930bdcd" name="Changes" comment=" Добавить класс FileBackedTaskManager (наследуется от InMemoryTaskManager)&#10;   — Реализовать метод save()&#10;   — Реализовать метод fromString()&#10; &#10; Изменить InMemoryTaskManager&#10;   — Сделать поля tasks/epics/subtasks protected&#10;   — Добавить метод setCounter(int)&#10; &#10; Добавить в модель:&#10;   — В Task добавить метод toCsv()&#10;   — В Subtask переопределить toCsv()&#10; &#10; Создать исключение ManagerSaveException&#10; &#10; В класс Managers:&#10;   — Реализовать метод loadFromFile(File)&#10; &#10; В Main:&#10;   — Реализовать пункт меню «12» — сценарий ТЗ_7 (запись в файл + загрузка + сравнение)&#10; &#10; Добавить тесты в FileBackedTaskManagerTest:&#10;   — save/load пустого файла&#10;   — save нескольких задач&#10;   — load нескольких задач&#10;   — проверки getById/update/remove сохраняются через сериализацию&#10;   — проверка базовой функциональности">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controllers/InMemoryTaskManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/InMemoryTaskManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controllers/Managers.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/Managers.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Epic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Epic.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Subtask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Subtask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Task.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -222,7 +212,15 @@
       <option name="project" value="LOCAL" />
       <updated>1743512358086</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary=" Добавить класс FileBackedTaskManager (наследуется от InMemoryTaskManager)&#10;   — Реализовать метод save()&#10;   — Реализовать метод fromString()&#10; &#10; Изменить InMemoryTaskManager&#10;   — Сделать поля tasks/epics/subtasks protected&#10;   — Добавить метод setCounter(int)&#10; &#10; Добавить в модель:&#10;   — В Task добавить метод toCsv()&#10;   — В Subtask переопределить toCsv()&#10; &#10; Создать исключение ManagerSaveException&#10; &#10; В класс Managers:&#10;   — Реализовать метод loadFromFile(File)&#10; &#10; В Main:&#10;   — Реализовать пункт меню «12» — сценарий ТЗ_7 (запись в файл + загрузка + сравнение)&#10; &#10; Добавить тесты в FileBackedTaskManagerTest:&#10;   — save/load пустого файла&#10;   — save нескольких задач&#10;   — load нескольких задач&#10;   — проверки getById/update/remove сохраняются через сериализацию&#10;   — проверка базовой функциональности">
+      <option name="closed" value="true" />
+      <created>1746644279665</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1746644279665</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -243,7 +241,8 @@
     <MESSAGE value="&#10;refactor:  TaskManager разделен на интерфейс и реализацию  &#10;feat: добавлена историю просмотра задач (InMemoryHistoryManager)  &#10;test: добавлены тесты для истории, добавления,  обновления задач и статусов." />
     <MESSAGE value="feat: добавлено консольное обновление задач + вызов истории (Main)" />
     <MESSAGE value=" fix:  InMemoryHistoryManager исправлен метод copyTask()&#10; fix:  InMemoryTaskManager добавлены проверки на null в методах getTaskById" />
-    <option name="LAST_COMMIT_MESSAGE" value=" fix:  InMemoryHistoryManager исправлен метод copyTask()&#10; fix:  InMemoryTaskManager добавлены проверки на null в методах getTaskById" />
+    <MESSAGE value=" Добавить класс FileBackedTaskManager (наследуется от InMemoryTaskManager)&#10;   — Реализовать метод save()&#10;   — Реализовать метод fromString()&#10; &#10; Изменить InMemoryTaskManager&#10;   — Сделать поля tasks/epics/subtasks protected&#10;   — Добавить метод setCounter(int)&#10; &#10; Добавить в модель:&#10;   — В Task добавить метод toCsv()&#10;   — В Subtask переопределить toCsv()&#10; &#10; Создать исключение ManagerSaveException&#10; &#10; В класс Managers:&#10;   — Реализовать метод loadFromFile(File)&#10; &#10; В Main:&#10;   — Реализовать пункт меню «12» — сценарий ТЗ_7 (запись в файл + загрузка + сравнение)&#10; &#10; Добавить тесты в FileBackedTaskManagerTest:&#10;   — save/load пустого файла&#10;   — save нескольких задач&#10;   — load нескольких задач&#10;   — проверки getById/update/remove сохраняются через сериализацию&#10;   — проверка базовой функциональности" />
+    <option name="LAST_COMMIT_MESSAGE" value=" Добавить класс FileBackedTaskManager (наследуется от InMemoryTaskManager)&#10;   — Реализовать метод save()&#10;   — Реализовать метод fromString()&#10; &#10; Изменить InMemoryTaskManager&#10;   — Сделать поля tasks/epics/subtasks protected&#10;   — Добавить метод setCounter(int)&#10; &#10; Добавить в модель:&#10;   — В Task добавить метод toCsv()&#10;   — В Subtask переопределить toCsv()&#10; &#10; Создать исключение ManagerSaveException&#10; &#10; В класс Managers:&#10;   — Реализовать метод loadFromFile(File)&#10; &#10; В Main:&#10;   — Реализовать пункт меню «12» — сценарий ТЗ_7 (запись в файл + загрузка + сравнение)&#10; &#10; Добавить тесты в FileBackedTaskManagerTest:&#10;   — save/load пустого файла&#10;   — save нескольких задач&#10;   — load нескольких задач&#10;   — проверки getById/update/remove сохраняются через сериализацию&#10;   — проверка базовой функциональности" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
