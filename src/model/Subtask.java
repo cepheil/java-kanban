@@ -33,7 +33,20 @@ public class Subtask extends model.Task {
         super.setTaskID(taskID);
     }
 
-    public void setEpicID(int epicID) {
-        this.epicID = epicID;
+    @Override
+    public String toString() {
+        return super.toString().trim() + "," + epicID + "\n";
     }
+
+    @Override
+    public String toCsv() {
+        return getTaskID() + "," +
+                taskType + "," +
+                getName() + "," +
+                getStatus() + "," +
+                getDescription() + "," +
+                epicID + "\n";
+    }
+
+
 }

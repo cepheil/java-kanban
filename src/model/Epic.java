@@ -58,4 +58,9 @@ public class Epic extends model.Task {
     public TaskType getType() {
         return TaskType.EPIC;
     }
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 }
