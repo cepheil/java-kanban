@@ -22,7 +22,7 @@ public class Main {
         TaskType taskType;
         Scanner scanner = new Scanner(System.in);
         TaskManager manager = Managers.getDefault();
-        File file = new File("tasks.csv");
+        File file = new File("resources/tasks.csv");
 
 
         while (true) {

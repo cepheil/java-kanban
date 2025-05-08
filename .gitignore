@@ -27,3 +27,6 @@ hs_err_pid*
 .idea/tasks.xml
 .idea/usage.statistics.xml
 .idea/dictionaries
+
+# Игнорируем рабочие CSV-файлы
+/resources/tasks.csv

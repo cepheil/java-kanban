@@ -4,8 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="830ab6ca-d4df-494b-a93f-ee04c930bdcd" name="Changes" comment=" Добавить класс FileBackedTaskManager (наследуется от InMemoryTaskManager)&#10;   — Реализовать метод save()&#10;   — Реализовать метод fromString()&#10; &#10; Изменить InMemoryTaskManager&#10;   — Сделать поля tasks/epics/subtasks protected&#10;   — Добавить метод setCounter(int)&#10; &#10; Добавить в модель:&#10;   — В Task добавить метод toCsv()&#10;   — В Subtask переопределить toCsv()&#10; &#10; Создать исключение ManagerSaveException&#10; &#10; В класс Managers:&#10;   — Реализовать метод loadFromFile(File)&#10; &#10; В Main:&#10;   — Реализовать пункт меню «12» — сценарий ТЗ_7 (запись в файл + загрузка + сравнение)&#10; &#10; Добавить тесты в FileBackedTaskManagerTest:&#10;   — save/load пустого файла&#10;   — save нескольких задач&#10;   — load нескольких задач&#10;   — проверки getById/update/remove сохраняются через сериализацию&#10;   — проверка базовой функциональности">
+    <list default="true" id="830ab6ca-d4df-494b-a93f-ee04c930bdcd" name="Changes" comment="исправить Codestyle">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/java-kanban.iml" beforeDir="false" afterPath="$PROJECT_DIR$/java-kanban.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/FileBackedTaskManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/FileBackedTaskManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/InMemoryTaskManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/InMemoryTaskManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/ManagerSaveException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/exceptions/ManagerSaveException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/Managers.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/Managers.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,12 +76,16 @@
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
     "git-widget-placeholder": "sprint__7-solution-in-file-manager",
-    "kotlin-language-version-configured": "true"
+    "kotlin-language-version-configured": "true",
+    "last_directory_selection": "D:/practicum_java/sprint4_hw/java-kanban/java-kanban/src"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="exceptions" />
     </key>
     <key name="CreateTestDialog.RecentsKey">
       <recent name="controllers" />
@@ -89,18 +100,10 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="FileBackedTaskManagerTest.getAllTypesById" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="All in java-kanban" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="java-kanban" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="controllers.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="controllers" />
-      <option name="MAIN_CLASS_NAME" value="controllers.FileBackedTaskManagerTest" />
-      <option name="METHOD_NAME" value="getAllTypesById" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -109,7 +112,7 @@
       <module name="java-kanban" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="controllers.*" />
+          <option name="PATTERN" value="exceptions.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -125,7 +128,7 @@
       <module name="java-kanban" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="controllers.*" />
+          <option name="PATTERN" value="exceptions.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -141,7 +144,7 @@
       <module name="java-kanban" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="controllers.*" />
+          <option name="PATTERN" value="exceptions.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -156,10 +159,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
+        <item itemvalue="JUnit.All in java-kanban" />
         <item itemvalue="JUnit.FileBackedTaskManagerTest.removeTaskByIdAndRemoveAllTasksByType" />
         <item itemvalue="JUnit.FileBackedTaskManagerTest.removeTaskById" />
         <item itemvalue="JUnit.FileBackedTaskManagerTest.historyShouldKeepPreviousTaskVersionAfterUpdate" />
-        <item itemvalue="JUnit.FileBackedTaskManagerTest.getAllTypesById" />
       </list>
     </recent_temporary>
   </component>
@@ -220,7 +223,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746644279665</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="исправить Codestyle">
+      <option name="closed" value="true" />
+      <created>1746645007441</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1746645007441</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -242,7 +253,8 @@
     <MESSAGE value="feat: добавлено консольное обновление задач + вызов истории (Main)" />
     <MESSAGE value=" fix:  InMemoryHistoryManager исправлен метод copyTask()&#10; fix:  InMemoryTaskManager добавлены проверки на null в методах getTaskById" />
     <MESSAGE value=" Добавить класс FileBackedTaskManager (наследуется от InMemoryTaskManager)&#10;   — Реализовать метод save()&#10;   — Реализовать метод fromString()&#10; &#10; Изменить InMemoryTaskManager&#10;   — Сделать поля tasks/epics/subtasks protected&#10;   — Добавить метод setCounter(int)&#10; &#10; Добавить в модель:&#10;   — В Task добавить метод toCsv()&#10;   — В Subtask переопределить toCsv()&#10; &#10; Создать исключение ManagerSaveException&#10; &#10; В класс Managers:&#10;   — Реализовать метод loadFromFile(File)&#10; &#10; В Main:&#10;   — Реализовать пункт меню «12» — сценарий ТЗ_7 (запись в файл + загрузка + сравнение)&#10; &#10; Добавить тесты в FileBackedTaskManagerTest:&#10;   — save/load пустого файла&#10;   — save нескольких задач&#10;   — load нескольких задач&#10;   — проверки getById/update/remove сохраняются через сериализацию&#10;   — проверка базовой функциональности" />
-    <option name="LAST_COMMIT_MESSAGE" value=" Добавить класс FileBackedTaskManager (наследуется от InMemoryTaskManager)&#10;   — Реализовать метод save()&#10;   — Реализовать метод fromString()&#10; &#10; Изменить InMemoryTaskManager&#10;   — Сделать поля tasks/epics/subtasks protected&#10;   — Добавить метод setCounter(int)&#10; &#10; Добавить в модель:&#10;   — В Task добавить метод toCsv()&#10;   — В Subtask переопределить toCsv()&#10; &#10; Создать исключение ManagerSaveException&#10; &#10; В класс Managers:&#10;   — Реализовать метод loadFromFile(File)&#10; &#10; В Main:&#10;   — Реализовать пункт меню «12» — сценарий ТЗ_7 (запись в файл + загрузка + сравнение)&#10; &#10; Добавить тесты в FileBackedTaskManagerTest:&#10;   — save/load пустого файла&#10;   — save нескольких задач&#10;   — load нескольких задач&#10;   — проверки getById/update/remove сохраняются через сериализацию&#10;   — проверка базовой функциональности" />
+    <MESSAGE value="исправить Codestyle" />
+    <option name="LAST_COMMIT_MESSAGE" value="исправить Codestyle" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -12,15 +12,15 @@ public class InMemoryTaskManager implements TaskManager {
     protected HashMap<Integer, Task> tasks = new HashMap<>();
     protected HashMap<Integer, Epic> epics = new HashMap<>();
     protected HashMap<Integer, Subtask> subtasks = new HashMap<>();
-    private static int counter = 0;
+    protected int counter = 0;
     private final HistoryManager historyManager;
 
     public InMemoryTaskManager(HistoryManager historyManager) {
         this.historyManager = historyManager;
     }
 
-    public static void setCounter(int newValue) {
-        InMemoryTaskManager.counter = newValue;
+    protected void setCounter(int newValue) {
+        this.counter = newValue;
     }
 
     @Override

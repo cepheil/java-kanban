@@ -1,5 +1,6 @@
 package controllers;
 
+import exceptions.ManagerSaveException;
 import model.Epic;
 import model.Subtask;
 import model.Task;
@@ -69,11 +70,9 @@ public class Managers {
                         break;
                 }
             }
-            InMemoryTaskManager.setCounter(maxId + 1);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+            fileBackedManager.setCounter(maxId + 1);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new ManagerSaveException("Ошибка при чтении файла: " + e.getMessage());
         }
         return fileBackedManager;
     }
