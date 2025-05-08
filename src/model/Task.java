@@ -28,7 +28,6 @@ public class Task {
         this.status = other.status;
         this.taskType = other.taskType;
         this.taskID = other.taskID;
-
     }
 
 
@@ -73,7 +72,17 @@ public class Task {
         return "[" + taskType + "]" + " [ID:" + taskID + "]" +
                 " name: " + name + " [" + status + "] " +
                 "Description: " + description + "\n";
+
     }
+
+    public String toCsv() {
+        return taskID + "," +
+                taskType + "," +
+                name + "," +
+                status + "," +
+                description + ", " + "\n";
+    }
+
 
     @Override
     public boolean equals(Object o) {
