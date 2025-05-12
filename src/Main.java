@@ -1,3 +1,4 @@
+import controllers.FileBackedTaskManager;
 import controllers.Managers;
 import controllers.TaskManager;
 import model.Epic;
@@ -6,6 +7,8 @@ import model.Task;
 import util.TaskStatus;
 import util.TaskType;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -19,6 +22,7 @@ public class Main {
         TaskType taskType;
         Scanner scanner = new Scanner(System.in);
         TaskManager manager = Managers.getDefault();
+        File file = new File("resources/tasks.csv");
 
 
         while (true) {
@@ -184,6 +188,27 @@ public class Main {
 
                     break;
 
+                case "12":
+                    System.out.println("Запуск сценария ТЗ_7");
+                    FileBackedTaskManager backedManager = (FileBackedTaskManager) Managers.getBackedTaskManager(file);
+                    addPreloadedTasks(backedManager); // загружены предустановленные задачи
+
+                    System.out.println("задачи сохранены в файл: " + file.getAbsolutePath());
+
+                    FileBackedTaskManager loadedTaskManager;
+                    try {
+                        loadedTaskManager = Managers.loadFromFile(file);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    System.out.println(" Печать списка всех задач для backedManager");
+                    printAllTasks(backedManager);
+                    System.out.println();
+                    System.out.println(" Печать списка всех задач для loadedTaskManager");
+                    printAllTasks(loadedTaskManager);
+                    break;
+
                 case "0":
                     System.out.println("выход из программы");
                     return;
@@ -209,6 +234,7 @@ public class Main {
         System.out.println("9. Загрузить предустановленные задачи");
         System.out.println("10. Печать истории");
         System.out.println("11. Запустить сценарий ТЗ_6");
+        System.out.println("12. Запустить сценарий ТЗ_7");
         System.out.println("0. ВЫХОД");
     }
 
