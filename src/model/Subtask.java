@@ -3,8 +3,12 @@ package model;
 import util.TaskStatus;
 import util.TaskType;
 
+import java.time.format.DateTimeFormatter;
+
 public class Subtask extends model.Task {
     private int epicID;
+    private final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+
 
     public Subtask(String name, String description, TaskStatus status, int epicID) {
         super(name, description, status);
@@ -35,7 +39,7 @@ public class Subtask extends model.Task {
 
     @Override
     public String toString() {
-        return super.toString().trim() + "," + epicID + "\n";
+        return super.toString().trim() + " epicID: " + epicID + "\n";
     }
 
     @Override
@@ -45,6 +49,9 @@ public class Subtask extends model.Task {
                 getName() + "," +
                 getStatus() + "," +
                 getDescription() + "," +
+                (getStartTime() != null ? getStartTime().format(FORMATTER) : " ") + "," +
+                (getDuration() != null ? getDuration().toMinutes() : 0) + "," +
+                (getEndTime() != null ? getEndTime().format(FORMATTER) : " ") + "," +
                 epicID + "\n";
     }
 

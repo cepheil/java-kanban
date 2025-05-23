@@ -8,6 +8,7 @@ import util.TaskType;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 public interface TaskManager {
 
@@ -63,6 +64,16 @@ public interface TaskManager {
 
     //b. Для эпиков: Управление статусами
     void updEpicStatus(Epic epic);
+
+
+    void updateEpicTime(Epic epic);
+
+
+    Set<Task> getPrioritizedTasks();
+
+
+    boolean isIntersect(Task task);
+
 
     HashMap<Integer, Subtask> getSubtasksMap();
 }
