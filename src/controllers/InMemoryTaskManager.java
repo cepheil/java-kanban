@@ -281,8 +281,8 @@ public class InMemoryTaskManager implements TaskManager {
         }
         if (epics.containsKey(taskId)) {
             Epic epic = epics.get(taskId);
-            ArrayList<Integer> SubtaskIdList = new ArrayList<>(epic.getSubtaskIdList());
-            for (Integer id : SubtaskIdList) {
+            ArrayList<Integer> subtaskIdList = new ArrayList<>(epic.getSubtaskIdList());
+            for (Integer id : subtaskIdList) {
                 Subtask sbt = subtasks.get(id);
                 if (sbt.getStartTime() != null) {
                     prioritizedTasks.remove(sbt);

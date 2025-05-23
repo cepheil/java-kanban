@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="830ab6ca-d4df-494b-a93f-ee04c930bdcd" name="Changes" comment="feat: расширение модели задач, приоритезация, исключения и покрытие тестами&#10;&#10;Классы Task / Subtask:&#10;- Добавить поля startTime и duration&#10;- Переопределить методы toString, equals, hashCode&#10;- Добавить методы setDuration, getDuration, setStartTime, getStartTime, getEndTime&#10;- Модифицировать метод toCsv с учетом новых полей&#10;&#10;Класс Epic:&#10;- Реализовать методы getStartTime, getEndTime, getDuration&#10;- Реализовать метод updateStatus&#10;&#10;Добавить классы:&#10;- StartTimeComparator для сортировки задач по времени начала&#10;- Исключения: InvalidSubtaskException, IntersectTaskException, EpicNotFoundException&#10;&#10;Класс InMemoryTaskManager:&#10;- Добавить поле prioritizedTasks (TreeSet)&#10;- Реализовать метод getPrioritizedTasks&#10;- Реализовать метод isIntersect для проверки пересечений задач&#10;- Добавить метод updateEpicTime&#10;- Модифицировать метод updEpicStatus&#10;&#10;Класс InMemoryHistoryManager:&#10;- Провести рефакторинг метода copyTask для корректного копирования задач разных типов&#10;&#10;Класс FileBackedTaskManager:&#10;- Модифицировать методы сериализации и десериализации (toString, fromString)&#10;- Обновить метод save с учетом новых полей&#10;&#10;Тесты:&#10;- Добавить тесты для новых и измененных методов&#10;- Создать абстрактный класс TaskManagerTest для устранения дублирования&#10;- Добавить тесты по ТЗ_8:&#10;  - Проверка расчета статуса Epic (граничные случаи)&#10;  - Проверка расчета времени у задач и эпиков&#10;  - Проверка пересечения задач&#10;  - Проверка поведения InMemoryHistoryManager: удаление из начала, середины и конца истории, пустая история, дублирование" />
+    <list default="true" id="830ab6ca-d4df-494b-a93f-ee04c930bdcd" name="Changes" comment="&#10;исправить CodeStyle">
+      <change beforePath="$PROJECT_DIR$/src/controllers/InMemoryTaskManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/InMemoryTaskManager.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -303,7 +305,15 @@
       <option name="project" value="LOCAL" />
       <updated>1747965262576</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="&#10;исправить CodeStyle">
+      <option name="closed" value="true" />
+      <created>1747965838058</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1747965838058</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -329,7 +339,8 @@
     <MESSAGE value="подправить code style" />
     <MESSAGE value="Внести изменения, согласно комментариям ревью.&#10;&#10;Реализовать удаление задач из истории при вызове метода removeAllTasks.&#10;&#10;Модифицировать class Node: удалить типизацию, сделать сеттеры protected.&#10;&#10;Модифицировать class InMemoryHistoryManager: удалить поле  size, удалить класс class HistoryManagerLinkList, добавить методы в InMemoryHistoryManager.&#10;&#10;Добавить конструктор для глубокого копирования задач в классы Task, Subtask, Epic. &#10;&#10;Модифицировать методы get...ById, возвращают копию задачи." />
     <MESSAGE value="feat: расширение модели задач, приоритезация, исключения и покрытие тестами&#10;&#10;Классы Task / Subtask:&#10;- Добавить поля startTime и duration&#10;- Переопределить методы toString, equals, hashCode&#10;- Добавить методы setDuration, getDuration, setStartTime, getStartTime, getEndTime&#10;- Модифицировать метод toCsv с учетом новых полей&#10;&#10;Класс Epic:&#10;- Реализовать методы getStartTime, getEndTime, getDuration&#10;- Реализовать метод updateStatus&#10;&#10;Добавить классы:&#10;- StartTimeComparator для сортировки задач по времени начала&#10;- Исключения: InvalidSubtaskException, IntersectTaskException, EpicNotFoundException&#10;&#10;Класс InMemoryTaskManager:&#10;- Добавить поле prioritizedTasks (TreeSet)&#10;- Реализовать метод getPrioritizedTasks&#10;- Реализовать метод isIntersect для проверки пересечений задач&#10;- Добавить метод updateEpicTime&#10;- Модифицировать метод updEpicStatus&#10;&#10;Класс InMemoryHistoryManager:&#10;- Провести рефакторинг метода copyTask для корректного копирования задач разных типов&#10;&#10;Класс FileBackedTaskManager:&#10;- Модифицировать методы сериализации и десериализации (toString, fromString)&#10;- Обновить метод save с учетом новых полей&#10;&#10;Тесты:&#10;- Добавить тесты для новых и измененных методов&#10;- Создать абстрактный класс TaskManagerTest для устранения дублирования&#10;- Добавить тесты по ТЗ_8:&#10;  - Проверка расчета статуса Epic (граничные случаи)&#10;  - Проверка расчета времени у задач и эпиков&#10;  - Проверка пересечения задач&#10;  - Проверка поведения InMemoryHistoryManager: удаление из начала, середины и конца истории, пустая история, дублирование" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: расширение модели задач, приоритезация, исключения и покрытие тестами&#10;&#10;Классы Task / Subtask:&#10;- Добавить поля startTime и duration&#10;- Переопределить методы toString, equals, hashCode&#10;- Добавить методы setDuration, getDuration, setStartTime, getStartTime, getEndTime&#10;- Модифицировать метод toCsv с учетом новых полей&#10;&#10;Класс Epic:&#10;- Реализовать методы getStartTime, getEndTime, getDuration&#10;- Реализовать метод updateStatus&#10;&#10;Добавить классы:&#10;- StartTimeComparator для сортировки задач по времени начала&#10;- Исключения: InvalidSubtaskException, IntersectTaskException, EpicNotFoundException&#10;&#10;Класс InMemoryTaskManager:&#10;- Добавить поле prioritizedTasks (TreeSet)&#10;- Реализовать метод getPrioritizedTasks&#10;- Реализовать метод isIntersect для проверки пересечений задач&#10;- Добавить метод updateEpicTime&#10;- Модифицировать метод updEpicStatus&#10;&#10;Класс InMemoryHistoryManager:&#10;- Провести рефакторинг метода copyTask для корректного копирования задач разных типов&#10;&#10;Класс FileBackedTaskManager:&#10;- Модифицировать методы сериализации и десериализации (toString, fromString)&#10;- Обновить метод save с учетом новых полей&#10;&#10;Тесты:&#10;- Добавить тесты для новых и измененных методов&#10;- Создать абстрактный класс TaskManagerTest для устранения дублирования&#10;- Добавить тесты по ТЗ_8:&#10;  - Проверка расчета статуса Epic (граничные случаи)&#10;  - Проверка расчета времени у задач и эпиков&#10;  - Проверка пересечения задач&#10;  - Проверка поведения InMemoryHistoryManager: удаление из начала, середины и конца истории, пустая история, дублирование" />
+    <MESSAGE value="&#10;исправить CodeStyle" />
+    <option name="LAST_COMMIT_MESSAGE" value="&#10;исправить CodeStyle" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
