@@ -11,62 +11,42 @@ import util.TaskType;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static util.TaskStatus.*;
 
-class FileBackedTaskManagerTest {
-    private FileBackedTaskManager manager;
-    private Task task;
-    private Epic epic;
-    private Subtask subtask;
-    private int epicId;
+class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskManager> {
+
     private File tempFile;
 
-
-    @BeforeEach
-    void setUp() throws IOException {
-        tempFile = File.createTempFile("tasks_empty", ".csv");
-        tempFile.deleteOnExit();
-        manager = new FileBackedTaskManager(Managers.getDefaultHistory(), tempFile);
+    @Override
+    protected FileBackedTaskManager createTaskManager() {
+        try {
+            tempFile = File.createTempFile("tasks_empty", ".csv");
+            tempFile.deleteOnExit();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return new FileBackedTaskManager(Managers.getDefaultHistory(), tempFile);
     }
 
-    @Test
-    void saveLoadEmptyFile() throws IOException {
-        manager.save();
-
-        FileBackedTaskManager loaded = Managers.loadFromFile(tempFile);
-
-        // Проверяем, что ни одна из коллекций не содержит элементов
-        assertTrue(loaded.getTasks().isEmpty(), "Tasks должен быть пуст");
-        assertTrue(loaded.getEpics().isEmpty(), "Epics должен быть пуст");
-        assertTrue(loaded.getSubtasks().isEmpty(), "Subtasks должен быть пуст");
-    }
 
     @Test
     void saveMultipleTasks() throws IOException {
-        Task t1 = new Task("T1", "DescT1", TaskStatus.NEW);
-        int idT = manager.addTask(t1);
-
-        Epic e1 = new Epic("E1", "DescE1");
-        int idE = manager.addEpic(e1);
-
-        Subtask s1 = new Subtask("S1", "DescS1", TaskStatus.IN_PROGRESS, idE);
-        int idS = manager.addSubtask(s1);
-
-        manager.save();
+        taskManager.save();
 
         List<String> lines = Files.readAllLines(tempFile.toPath());
 
         assertEquals(1 + 3, lines.size(), "Количество строк в файле должно быть header + 3");
-
-        assertEquals("id,type,name,status,description,epicID", lines.get(0).trim());
+        assertEquals("id,type,name,status,description,startTime,duration,endTime,epicID", lines.get(0).trim());
 
         // Проверяем, что в файле сохранились задачи по строкам
-        String csv1 = t1.toCsv().trim();  //сохраняем такс в строку.
-        String csv2 = e1.toCsv().trim();  //... эпик в строку
-        String csv3 = s1.toCsv().trim();  //... сабтаск в строку
+        String csv1 = task.toCsv().trim();  //сохраняем такс в строку.
+        String csv2 = epic.toCsv().trim();  //... эпик в строку
+        String csv3 = subtask.toCsv().trim();  //... сабтаск в строку
 
         assertEquals(csv1, lines.get(1).trim());
         assertEquals(csv2, lines.get(2).trim());
@@ -75,15 +55,7 @@ class FileBackedTaskManagerTest {
 
     @Test
     void loadMultipleTasks() throws IOException {
-        Task t1 = new Task("T1", "DescT1", TaskStatus.NEW);
-        int idT = manager.addTask(t1);
-
-        Epic e1 = new Epic("E1", "DescE1");
-        int idE = manager.addEpic(e1);
-
-        Subtask s1 = new Subtask("S1", "DescS1", TaskStatus.IN_PROGRESS, idE);
-        int idS = manager.addSubtask(s1);
-
+        int idS = subtask.getTaskID();
         //проверка, что файл существует.
         assertTrue(Files.exists(tempFile.toPath()), "Файл не был создан на диске");
 
@@ -100,45 +72,35 @@ class FileBackedTaskManagerTest {
         Epic le = loaded.getEpics().get(0);
         Subtask ls = loaded.getSubtasks().get(0);
 
-        assertEquals(t1.getName(), lt.getName());
-        assertEquals(t1.getDescription(), lt.getDescription());
-        assertEquals(t1.getStatus(), lt.getStatus());
-        assertEquals(t1.getTaskID(), lt.getTaskID());
+        assertEquals(task.getName(), lt.getName());
+        assertEquals(task.getDescription(), lt.getDescription());
+        assertEquals(task.getStatus(), lt.getStatus());
+        assertEquals(task.getTaskID(), lt.getTaskID());
 
-        assertEquals(e1.getName(), le.getName());
-        assertEquals(e1.getDescription(), le.getDescription());
-        assertEquals(e1.getTaskID(), le.getTaskID());
+        assertEquals(epic.getName(), le.getName());
+        assertEquals(epic.getDescription(), le.getDescription());
+        assertEquals(epic.getTaskID(), le.getTaskID());
         assertEquals(1, le.getSubtaskIdList().size(), "эпик не содержит подзадачу");
 
-        assertEquals(s1.getName(), ls.getName());
-        assertEquals(s1.getDescription(), ls.getDescription());
-        assertEquals(s1.getStatus(), ls.getStatus());
-        assertEquals(s1.getTaskID(), ls.getTaskID());
+        assertEquals(subtask.getName(), ls.getName());
+        assertEquals(subtask.getDescription(), ls.getDescription());
+        assertEquals(subtask.getStatus(), ls.getStatus());
+        assertEquals(subtask.getTaskID(), ls.getTaskID());
 
         //связь сабтаска и эпика
-        assertEquals(idE, ls.getEpicID());
-        assertTrue(loaded.getEpicById(idE).getSubtaskIdList().contains(idS));
-    }
-
-    @Test
-    void removeAllTasks() {
+        assertEquals(epicId, ls.getEpicID());
+        assertTrue(loaded.getEpicById(epicId).getSubtaskIdList().contains(idS));
     }
 
     @Test
     void getAllTypesById() {
-        Task task = new Task("T1", "DescT1", TaskStatus.NEW);
-        int idT = manager.addTask(task);
+        int idT = task.getTaskID();
+        int idE = epicId;
+        int idS = subtask.getTaskID();
 
-        Epic epic = new Epic("E1", "DescE1");
-        int idE = manager.addEpic(epic);
-
-        Subtask subtask = new Subtask("S1", "DescS1", TaskStatus.IN_PROGRESS, idE);
-        int idS = manager.addSubtask(subtask);
-
-
-        Task savedTask = manager.getTaskById(idT);
-        Epic savedEpic = manager.getEpicById(idE);
-        Subtask savedSubtask = manager.getSubtaskById(idS);
+        Task savedTask = taskManager.getTaskById(idT);
+        Epic savedEpic = taskManager.getEpicById(idE);
+        Subtask savedSubtask = taskManager.getSubtaskById(idS);
 
         assertNotNull(savedTask, "Задача не найдена");
         assertNotNull(savedEpic, "Эпик не найден");
@@ -147,118 +109,107 @@ class FileBackedTaskManagerTest {
         assertEquals(task, savedTask, "Задачи не равны");
         assertEquals(epic, savedEpic, "Эпики не равны");
         assertEquals(subtask, savedSubtask, "Подзадачи не равны");
-
     }
 
 
     @Test
-    void historyShouldKeepPreviousTaskVersionAfterUpdate() throws IOException {
-        Task task = new Task("T1", "DescT1", TaskStatus.NEW);
-        int idT = manager.addTask(task);
-        manager.getTaskById(idT); // добавляем в историю task {0}
+    void historyShouldKeepPreviousTaskVersionAfterUpdate() {
+        int idT = task.getTaskID();
+        taskManager.getTaskById(idT); // добавляем в историю task {0}
 
-        Epic epic = new Epic("E1", "DescE1");
-        int idE = manager.addEpic(epic);
+        int idE = epicId;
         TaskStatus epicStatus = epic.getStatus();  // NEW
-        manager.getEpicById(idE); // добавляем в историю epic {1}
+        taskManager.getEpicById(idE); // добавляем в историю epic {1}
 
-        Subtask subtask = new Subtask("S1", "DescS1", TaskStatus.IN_PROGRESS, idE);
-        int idS = manager.addSubtask(subtask);
-        manager.getSubtaskById(idS);  // добавляем в историю subtask {2}
-
+        int idS = subtask.getTaskID();
+        taskManager.getSubtaskById(idS);  // добавляем в историю subtask {2}
 
         // обновляем задачу
         Task updatedTask = new Task("updTask", "updTask_Desc", IN_PROGRESS);
+        updatedTask.setStartTime(start.plusDays(8));
+        updatedTask.setDuration(duration);
         updatedTask.setTaskID(idT);
-        manager.updateTask(updatedTask);
+        taskManager.updateTask(updatedTask);
 
         // обновляем эпик
         Epic epicUpdated = new Epic("updEpic", "updEpic_Desc");
         epicUpdated.setTaskID(idE);
         epicUpdated.setStatus(DONE);
-        manager.updateEpic(epicUpdated);
+        taskManager.updateEpic(epicUpdated);
 
         // обновляем подзадачу
-        Subtask subtaskUpdated = new Subtask("updSubtask", "updSubtask_Desc", NEW, idE);
+        Subtask subtaskUpdated = new Subtask("updSubtask", "updSubtask_Desc", IN_PROGRESS, idE);
+        subtaskUpdated.setStartTime(start.plusDays(5));
+        subtaskUpdated.setDuration(duration);
         subtaskUpdated.setTaskID(idS);
-        manager.updateSubtask(subtaskUpdated);
+        taskManager.updateSubtask(subtaskUpdated);
 
-        List<Task> history = manager.getHistory(); //получаем историю обращений к задачам.
+        List<Task> history = taskManager.getHistory(); //получаем историю обращений к задачам.
 
         // проверка истории
         assertFalse(history.isEmpty(), "Ошибка! История пуста");
         assertNotNull(history, "Ошибка! history = null.");
-        assertEquals(3, manager.getHistory().size(), "Ошибка! История должна хранить 3 элемента");
+        assertEquals(3, taskManager.getHistory().size(), "Ошибка! История должна хранить 3 элемента");
 
         // проверка хранения Тасков.
-        assertEquals("T1", history.get(0).getName(), "name != не хранит исходную версию");
-        assertEquals("DescT1", history.get(0).getDescription(),
+        assertEquals("Test Task", history.get(0).getName(), "name != не хранит исходную версию");
+        assertEquals("Test description", history.get(0).getDescription(),
                 "Description != не хранит исходную версию");
         assertEquals(NEW, history.get(0).getStatus(), "Status != не хранит исходную версию");
         assertEquals(idT, history.get(0).getTaskID(), "taskId != не хранит исходную версию");
 
         // проверка хранения Эпиков.
-        assertEquals("E1", history.get(1).getName(), "name != не хранит исходную версию");
-        assertEquals("DescE1", history.get(1).getDescription(),
+        assertEquals("Test Epic", history.get(1).getName(), "name != не хранит исходную версию");
+        assertEquals("Test Epic description", history.get(1).getDescription(),
                 "Description != не хранит исходную версию");
         assertEquals(epicStatus, history.get(1).getStatus(), "Status != не хранит исходную версию");
 
 
         // проверка хранения Сабтасков.
-        assertEquals("S1", history.get(2).getName(), "name != не хранит исходную версию");
-        assertEquals("DescS1", history.get(2).getDescription(),
+        assertEquals("Test Subtask", history.get(2).getName(), "name != не хранит исходную версию");
+        assertEquals("Test Subtask description", history.get(2).getDescription(),
                 "Description != не хранит исходную версию");
-        assertEquals(IN_PROGRESS, history.get(2).getStatus(), "Status != не хранит исходную версию");
+        assertEquals(NEW, history.get(2).getStatus(), "Status != не хранит исходную версию");
 
         // проверка обновленных задач после загрузки из файла
-        FileBackedTaskManager loaded = Managers.loadFromFile(tempFile);
+        try {
+            FileBackedTaskManager loaded = Managers.loadFromFile(tempFile);
 
-        Task loadedTask = loaded.getTaskById(idT);
-        Epic loadedEpic = loaded.getEpicById(idE);
-        Subtask loadedSubtask = loaded.getSubtaskById(idS);
+            Task loadedTask = loaded.getTaskById(idT);
+            Epic loadedEpic = loaded.getEpicById(idE);
+            Subtask loadedSubtask = loaded.getSubtaskById(idS);
 
-        assertEquals("updTask", loadedTask.getName(), "Ошибка! Task name - не совпадают");
-        assertEquals("updTask_Desc", loadedTask.getDescription(),
-                "Ошибка! Task description - не совпадают");
-        assertEquals(IN_PROGRESS, loadedTask.getStatus(), "Ошибка! Task status - не совпадают");
+            assertEquals("updTask", loadedTask.getName(), "Ошибка! Task name - не совпадают");
+            assertEquals("updTask_Desc", loadedTask.getDescription(),
+                    "Ошибка! Task description - не совпадают");
+            assertEquals(IN_PROGRESS, loadedTask.getStatus(), "Ошибка! Task status - не совпадают");
 
-        assertEquals("updEpic", loadedEpic.getName(), "Ошибка! Epic name - не совпадают");
-        assertEquals("updEpic_Desc", loadedEpic.getDescription(),
-                "Ошибка! Epic description - не совпадают");
-        assertEquals(NEW, loadedEpic.getStatus(), "Ошибка! Epic status - не совпадают");
+            assertEquals("updEpic", loadedEpic.getName(), "Ошибка! Epic name - не совпадают");
+            assertEquals("updEpic_Desc", loadedEpic.getDescription(),
+                    "Ошибка! Epic description - не совпадают");
+            assertEquals(IN_PROGRESS, loadedEpic.getStatus(), "Ошибка! Epic status - не совпадают");
 
-        assertEquals("updSubtask", loadedSubtask.getName(), "Ошибка! Subtask name - не совпадают");
-        assertEquals("updSubtask_Desc", loadedSubtask.getDescription(),
-                "Ошибка! Subtask description - не совпадают");
-        assertEquals(NEW, loadedSubtask.getStatus(), "Ошибка! Subtask status - не совпадают");
-
+            assertEquals("updSubtask", loadedSubtask.getName(), "Ошибка! Subtask name - не совпадают");
+            assertEquals("updSubtask_Desc", loadedSubtask.getDescription(),
+                    "Ошибка! Subtask description - не совпадают");
+            assertEquals(IN_PROGRESS, loadedSubtask.getStatus(), "Ошибка! Subtask status - не совпадают");
+        } catch (IOException e) {
+            fail("Ошибка при загрузке менеджера из файла: " + e.getMessage());
+        }
     }
 
     @Test
     void removeTaskByIdAndRemoveAllTasksByType() throws IOException {
-        Task task = new Task("T1", "DescT1", TaskStatus.NEW);
-        int idT = manager.addTask(task);
-
-        Epic epic = new Epic("E1", "DescE1");
-        int idE = manager.addEpic(epic);
-
-        Subtask subtask = new Subtask("S1", "DescS1", TaskStatus.IN_PROGRESS, idE);
-        int idS = manager.addSubtask(subtask);
-
-
-        manager.removeTaskById(idT);
-        manager.removeAllTasks(TaskType.EPIC);
-
+        int idT = task.getTaskID();
+        taskManager.removeTaskById(idT);
+        taskManager.removeAllTasks(TaskType.EPIC);
 
         //загружаем из файла
         FileBackedTaskManager loaded = Managers.loadFromFile(tempFile);
 
-
         assertNull(loaded.getTaskById(idT), "Task не должен существовать после удаления");
         assertTrue(loaded.getEpics().isEmpty(), "Epics должны быть пусты после removeAll(EPIC)");
         assertTrue(loaded.getSubtasks().isEmpty(), "Subtasks должны быть пусты после removeAll(EPIC)");
-
     }
-
 
 }

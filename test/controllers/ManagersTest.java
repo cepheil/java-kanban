@@ -3,6 +3,8 @@ package controllers;
 import model.Task;
 import org.junit.jupiter.api.Test;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -18,6 +20,10 @@ class ManagersTest {
 
 
         Task task = new Task("Test Task", "Test Task description", NEW);
+        LocalDateTime start  = LocalDateTime.of(2030, 5, 4, 10, 0);
+        Duration duration = Duration.ofMinutes(10);
+        task.setStartTime(start);
+        task.setDuration(duration);
         int taskId = manager.addTask(task);
         Task savedTask = manager.getTaskById(taskId);
 

@@ -91,35 +91,14 @@ public class InMemoryHistoryManager implements HistoryManager {
         }
     }
 
-    /**
-     * Создает глубокую копию задачи, чтобы зафиксировать её состояние на момент добавления в историю.
-     *
-     * @param task Исходная задача для копирования.
-     * @return Копия задачи.
-     */
     private Task copyTask(Task task) {
         TaskType type = task.getType();
         if (type == TaskType.EPIC) {
-            Epic epic = (Epic) task;
-            Epic copyEpic = new Epic(epic.getName(), epic.getDescription());
-            copyEpic.setTaskID(epic.getTaskID());
-            copyEpic.setStatus(epic.getStatus());
-            if (epic.getSubtaskIdList() != null) {
-                copyEpic.setSubtaskIdList(new ArrayList<>(epic.getSubtaskIdList()));
-            } else {
-                copyEpic.setSubtaskIdList(new ArrayList<>());
-            }
-            return copyEpic;
+            return new Epic((Epic) task);
         } else if (type == TaskType.SUBTASK) {
-            Subtask subtask = (Subtask) task;
-            Subtask copySubtask = new Subtask(subtask.getName(), subtask.getDescription(), subtask.getStatus(),
-                    subtask.getEpicID());
-            copySubtask.setTaskID(subtask.getTaskID());
-            return copySubtask;
+            return new Subtask((Subtask) task);
         } else {
-            Task copyTask = new Task(task.getName(), task.getDescription(), task.getStatus());
-            copyTask.setTaskID(task.getTaskID());
-            return copyTask;
+            return new Task(task);
         }
     }
 }
