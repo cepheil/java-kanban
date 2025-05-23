@@ -120,7 +120,7 @@ public class InMemoryTaskManager implements TaskManager {
         }
     }
 
-    //  Optional  TODO!
+    //  Optional
     //c. Получение по идентификатору.
     @Override
     public Task getTaskById(int taskId) {
@@ -166,7 +166,7 @@ public class InMemoryTaskManager implements TaskManager {
         if (newTask.getStartTime() != null && !isIntersect(newTask)) {
             prioritizedTasks.add(new Task(newTask));
         } else {
-            throw new IntersectTaskException("Задачи пересекаются по времени " + newTask.getStartTime().format(FORMATTER));
+            throw new IntersectTaskException("Задачи пересекаются по времени " + newTask.getStartTime().format(formatter));
         }
         return id;
     }
@@ -195,7 +195,7 @@ public class InMemoryTaskManager implements TaskManager {
         if (newSubtask.getStartTime() != null && !isIntersect(newSubtask)) {
             prioritizedTasks.add(new Subtask(newSubtask));
         } else {
-            throw new IntersectTaskException("Задачи пересекаются по времени " + newSubtask.getStartTime().format(FORMATTER));
+            throw new IntersectTaskException("Задачи пересекаются по времени " + newSubtask.getStartTime().format(formatter));
         }
         Epic epic = epics.get(newSubtask.getEpicID());
         epic.setSubtaskIdList(id);// Добавляем номер СТ в лист к эпику
