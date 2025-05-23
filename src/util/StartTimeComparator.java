@@ -5,7 +5,7 @@ import model.Task;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 
-public class StartTimeComparator implements Comparator<Task>{
+public class StartTimeComparator implements Comparator<Task> {
 
     @Override
     public int compare(Task o1, Task o2) {
@@ -14,5 +14,5 @@ public class StartTimeComparator implements Comparator<Task>{
         int result = time1.compareTo(time2);
         if (result != 0) return result;
         return Integer.compare(o1.getTaskID(), o2.getTaskID());//
-     }
+    }
 }
