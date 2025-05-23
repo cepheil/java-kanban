@@ -22,7 +22,7 @@ public class InMemoryTaskManager implements TaskManager {
     protected int counter = 0;
     private final HistoryManager historyManager;
     private final Set<Task> prioritizedTasks = new TreeSet<>(new StartTimeComparator());
-    private final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
     public InMemoryTaskManager(HistoryManager historyManager) {
         this.historyManager = historyManager;
@@ -218,7 +218,7 @@ public class InMemoryTaskManager implements TaskManager {
         if (updTask.getStartTime() != null && !isIntersect(updTask)) {
             prioritizedTasks.add(new Task(updTask));
         } else {
-            throw new IntersectTaskException("Задачи пересекаются по времени " + updTask.getStartTime().format(FORMATTER));
+            throw new IntersectTaskException("Задачи пересекаются по времени " + updTask.getStartTime().format(formatter));
         }
     }
 
@@ -236,7 +236,7 @@ public class InMemoryTaskManager implements TaskManager {
         if (updSubtask.getStartTime() != null && !isIntersect(updSubtask)) {
             prioritizedTasks.add(new Subtask(updSubtask));
         } else {
-            throw new IntersectTaskException("Задачи пересекаются по времени " + updSubtask.getStartTime().format(FORMATTER));
+            throw new IntersectTaskException("Задачи пересекаются по времени " + updSubtask.getStartTime().format(formatter));
         }
         updEpicStatus(epics.get(updSubtask.getEpicID())); // Обновление статуса эпика.
         updateEpicTime(epics.get(updSubtask.getEpicID()));  // Обновление времени эпика.

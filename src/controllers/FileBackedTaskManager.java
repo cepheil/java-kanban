@@ -20,7 +20,7 @@ import java.util.TreeMap;
 
 public class FileBackedTaskManager extends InMemoryTaskManager {
     private final File file;
-    private final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
     public FileBackedTaskManager(HistoryManager historyManager, File file) {
         super(historyManager);
@@ -109,9 +109,9 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
             String name = split[2];
             TaskStatus status = TaskStatus.valueOf(split[3].trim());
             String description = split[4];
-            LocalDateTime startTime = split[5].isBlank() ? null : LocalDateTime.parse(split[5].trim(), FORMATTER);
+            LocalDateTime startTime = split[5].isBlank() ? null : LocalDateTime.parse(split[5].trim(), formatter);
             Duration duration = split[6].isBlank() ? Duration.ZERO : Duration.ofMinutes(Long.parseLong(split[6].trim()));
-            LocalDateTime endTime = split[7].isBlank() ? null : LocalDateTime.parse(split[7].trim(), FORMATTER);
+            LocalDateTime endTime = split[7].isBlank() ? null : LocalDateTime.parse(split[7].trim(), formatter);
 
 
             switch (type) {
