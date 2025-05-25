@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -216,7 +217,7 @@ public class Main {
                     System.out.println("Выводим список задач в порядке приоритета");
                     addPreloadedTasks(manager);
                     System.out.println("Предустановленные задачи успешно добавлены.");
-                    Set<Task> prioritizedTasks = manager.getPrioritizedTasks();
+                    List<Task> prioritizedTasks = manager.getPrioritizedTasks();
                     for (Task t : prioritizedTasks) {
                         System.out.println(t);
                     }

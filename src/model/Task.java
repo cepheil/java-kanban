@@ -1,5 +1,6 @@
 package model;
 
+import util.CustomFormatter;
 import util.TaskStatus;
 import util.TaskType;
 
@@ -17,7 +18,7 @@ public class Task {
     private TaskStatus status;
     private Duration duration;
     private LocalDateTime startTime;
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+    protected CustomFormatter customFormatter = new CustomFormatter();
 
     public Task(String name, String description, TaskStatus status) {
         this.name = name;
@@ -79,9 +80,9 @@ public class Task {
         return "[" + taskType + "]" + " [ID:" + taskID + "]" +
                 " name: " + name + " [" + status + "] " +
                 "Description: " + description + " [" +
-                "StartTime: " + (startTime != null ? startTime.format(formatter) : " ") +
+                "StartTime: " + (startTime != null ? startTime.format(customFormatter.getFormatter()) : " ") +
                 " Duration: " + (duration != null ? duration.toMinutes() : "0") +
-                " EndTime: " + (getEndTime() != null ? getEndTime().format(formatter) : " ") + "] " + "\n";
+                " EndTime: " + (getEndTime() != null ? getEndTime().format(customFormatter.getFormatter()) : " ") + "] " + "\n";
     }
 
     public String toCsv() {
@@ -90,9 +91,9 @@ public class Task {
                 name + "," +
                 status + "," +
                 description + "," +
-                (startTime != null ? startTime.format(formatter) : " ") + "," +
+                (startTime != null ? startTime.format(customFormatter.getFormatter()) : " ") + "," +
                 (duration != null ? duration.toMinutes() : 0) + "," +
-                (getEndTime() != null ? getEndTime().format(formatter) : " ") + ", " + "\n";
+                (getEndTime() != null ? getEndTime().format(customFormatter.getFormatter()) : " ") + ", " + "\n";
     }
 
     ////sprint_8-solution-time-and-duration

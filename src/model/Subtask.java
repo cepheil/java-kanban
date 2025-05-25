@@ -3,11 +3,9 @@ package model;
 import util.TaskStatus;
 import util.TaskType;
 
-import java.time.format.DateTimeFormatter;
 
 public class Subtask extends model.Task {
     private int epicID;
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
 
     public Subtask(String name, String description, TaskStatus status, int epicID) {
@@ -49,9 +47,9 @@ public class Subtask extends model.Task {
                 getName() + "," +
                 getStatus() + "," +
                 getDescription() + "," +
-                (getStartTime() != null ? getStartTime().format(formatter) : " ") + "," +
+                (getStartTime() != null ? getStartTime().format(customFormatter.getFormatter()) : " ") + "," +
                 (getDuration() != null ? getDuration().toMinutes() : 0) + "," +
-                (getEndTime() != null ? getEndTime().format(formatter) : " ") + "," +
+                (getEndTime() != null ? getEndTime().format(customFormatter.getFormatter()) : " ") + "," +
                 epicID + "\n";
     }
 

@@ -8,7 +8,6 @@ import util.TaskType;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 
 public interface TaskManager {
 
@@ -69,7 +68,7 @@ public interface TaskManager {
     void updateEpicTime(Epic epic);
 
 
-    Set<Task> getPrioritizedTasks();
+    List<Task> getPrioritizedTasks();
 
 
     boolean isIntersect(Task task);

@@ -1,18 +1,12 @@
 package controllers;
 
 import model.Epic;
-import model.Subtask;
 import model.Task;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import util.TaskStatus;
-import util.TaskType;
 
-import java.time.Duration;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -66,7 +60,7 @@ class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager> {
         taskManager.addTask(t4);
         taskManager.addTask(t5);
 
-        Set<Task> prioritized = taskManager.getPrioritizedTasks();
+        List<Task> prioritized = taskManager.getPrioritizedTasks();
         List<Task> expectedOrder = List.of(task, subtask, t5, t4, t3, t2, t1);
         assertEquals(expectedOrder, new ArrayList<>(prioritized), "Задачи должны быть отсортированы по startTime в порядке возрастания");
 

@@ -135,7 +135,7 @@ public abstract class TaskManagerTest<T extends TaskManager> {
     public void testTimeIsIntersect() {
 
         Task task2 = new Task("Task2", "Task2 description", NEW);
-        LocalDateTime startTask2 =  task.getStartTime().plusMinutes(5);
+        LocalDateTime startTask2 = task.getStartTime().plusMinutes(5);
         Duration durationTask2 = Duration.ofMinutes(15);
         task2.setStartTime(startTask2);
         task2.setDuration(durationTask2);

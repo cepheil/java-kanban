@@ -4,6 +4,7 @@ import exceptions.ManagerSaveException;
 import model.Epic;
 import model.Subtask;
 import model.Task;
+import util.CustomFormatter;
 import util.TaskStatus;
 import util.TaskType;
 
@@ -13,14 +14,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import java.util.TreeMap;
 
 
 public class FileBackedTaskManager extends InMemoryTaskManager {
     private final File file;
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+    protected CustomFormatter customFormatter = new CustomFormatter();
 
     public FileBackedTaskManager(HistoryManager historyManager, File file) {
         super(historyManager);
@@ -109,9 +109,11 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
             String name = split[2];
             TaskStatus status = TaskStatus.valueOf(split[3].trim());
             String description = split[4];
-            LocalDateTime startTime = split[5].isBlank() ? null : LocalDateTime.parse(split[5].trim(), formatter);
+            LocalDateTime startTime = split[5].isBlank() ? null : LocalDateTime.parse(split[5].trim(),
+                    customFormatter.getFormatter());
             Duration duration = split[6].isBlank() ? Duration.ZERO : Duration.ofMinutes(Long.parseLong(split[6].trim()));
-            LocalDateTime endTime = split[7].isBlank() ? null : LocalDateTime.parse(split[7].trim(), formatter);
+            LocalDateTime endTime = split[7].isBlank() ? null : LocalDateTime.parse(split[7].trim(),
+                    customFormatter.getFormatter());
 
 
             switch (type) {
