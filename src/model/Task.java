@@ -1,8 +1,11 @@
 package model;
 
+import util.CustomFormatter;
 import util.TaskStatus;
 import util.TaskType;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Task {
@@ -12,7 +15,9 @@ public class Task {
     private String name;
     private String description;
     private TaskStatus status;
-
+    private Duration duration;
+    private LocalDateTime startTime;
+    protected CustomFormatter customFormatter = new CustomFormatter();
 
     public Task(String name, String description, TaskStatus status) {
         this.name = name;
@@ -28,6 +33,8 @@ public class Task {
         this.status = other.status;
         this.taskType = other.taskType;
         this.taskID = other.taskID;
+        this.startTime = other.startTime;
+        this.duration = other.duration;
     }
 
 
@@ -71,8 +78,10 @@ public class Task {
     public String toString() {
         return "[" + taskType + "]" + " [ID:" + taskID + "]" +
                 " name: " + name + " [" + status + "] " +
-                "Description: " + description + "\n";
-
+                "Description: " + description + " [" +
+                "StartTime: " + (startTime != null ? startTime.format(customFormatter.getFormatter()) : " ") +
+                " Duration: " + (duration != null ? duration.toMinutes() : "0") +
+                " EndTime: " + (getEndTime() != null ? getEndTime().format(customFormatter.getFormatter()) : " ") + "] " + "\n";
     }
 
     public String toCsv() {
@@ -80,7 +89,31 @@ public class Task {
                 taskType + "," +
                 name + "," +
                 status + "," +
-                description + ", " + "\n";
+                description + "," +
+                (startTime != null ? startTime.format(customFormatter.getFormatter()) : " ") + "," +
+                (duration != null ? duration.toMinutes() : 0) + "," +
+                (getEndTime() != null ? getEndTime().format(customFormatter.getFormatter()) : " ") + ", " + "\n";
+    }
+
+    ////sprint_8-solution-time-and-duration
+    public void setDuration(Duration duration) {
+        this.duration = duration;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public Duration getDuration() {
+        return duration;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public LocalDateTime getEndTime() {
+        return (startTime != null && duration != null) ? startTime.plus(duration) : null;
     }
 
 
@@ -93,11 +126,13 @@ public class Task {
                 taskType == task.taskType &&
                 Objects.equals(name, task.name) &&
                 Objects.equals(description, task.description) &&
-                status == task.status;
+                status == task.status &&
+                Objects.equals(duration, task.duration) &&
+                Objects.equals(startTime, task.startTime);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(taskID, taskType, name, description, status);
+        return Objects.hash(taskID, taskType, name, description, status, duration, startTime);
     }
 }

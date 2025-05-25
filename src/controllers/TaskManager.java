@@ -64,5 +64,15 @@ public interface TaskManager {
     //b. Для эпиков: Управление статусами
     void updEpicStatus(Epic epic);
 
+
+    void updateEpicTime(Epic epic);
+
+
+    List<Task> getPrioritizedTasks();
+
+
+    boolean isIntersect(Task task);
+
+
     HashMap<Integer, Subtask> getSubtasksMap();
 }

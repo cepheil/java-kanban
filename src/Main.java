@@ -9,8 +9,12 @@ import util.TaskType;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+
 
 public class Main {
 
@@ -209,9 +213,21 @@ public class Main {
                     printAllTasks(loadedTaskManager);
                     break;
 
+                case "13":
+                    System.out.println("Выводим список задач в порядке приоритета");
+                    addPreloadedTasks(manager);
+                    System.out.println("Предустановленные задачи успешно добавлены.");
+                    List<Task> prioritizedTasks = manager.getPrioritizedTasks();
+                    for (Task t : prioritizedTasks) {
+                        System.out.println(t);
+                    }
+                    break;
+
+
                 case "0":
                     System.out.println("выход из программы");
                     return;
+
 
                 default:
                     System.out.println("такого пункта не существует:" + cmd);
@@ -235,6 +251,7 @@ public class Main {
         System.out.println("10. Печать истории");
         System.out.println("11. Запустить сценарий ТЗ_6");
         System.out.println("12. Запустить сценарий ТЗ_7");
+        System.out.println("13. Вывести список задач в порядке приоритета ТЗ_8");
         System.out.println("0. ВЫХОД");
     }
 
@@ -340,29 +357,45 @@ public class Main {
 
     public static void addPreloadedTasks(TaskManager manager) {
         Task task1 = new Task("Задача_1", "Описание Задачи_1", TaskStatus.NEW);
+        task1.setStartTime(LocalDateTime.now());
+        task1.setDuration(Duration.ofMinutes(1));
         manager.addTask(task1);
+
         Task task2 = new Task("Задача_2", "Описание Задачи_2", TaskStatus.IN_PROGRESS);
+        task2.setStartTime(LocalDateTime.now().plus(Duration.ofMinutes(60)));
+        task2.setDuration(Duration.ofMinutes(1));
         manager.addTask(task2);
 
         Epic epic1 = new Epic("Эпик_1", "Описание Эпика_1");
         manager.addEpic(epic1);
         Subtask subtask1 = new Subtask("Подзадача_1", "Описание Подзадачи_1",
                 TaskStatus.NEW, epic1.getTaskID());
+        subtask1.setStartTime(LocalDateTime.now().plus(Duration.ofMinutes(120)));
+        subtask1.setDuration(Duration.ofMinutes(1));
         manager.addSubtask(subtask1);
         Subtask subtask2 = new Subtask("Подзадача_2", "Описание Подзадачи_2",
                 TaskStatus.IN_PROGRESS, epic1.getTaskID());
+        subtask2.setStartTime(LocalDateTime.now().plus(Duration.ofMinutes(180)));
+        subtask2.setDuration(Duration.ofMinutes(1));
         manager.addSubtask(subtask2);
+
 
         Epic epic2 = new Epic("Эпик_2", "Описание Эпика_2");
         manager.addEpic(epic2);
         Subtask subtask3 = new Subtask("Подзадача_3", "Описание Подзадачи_3",
                 TaskStatus.NEW, epic2.getTaskID());
+        subtask3.setStartTime(LocalDateTime.now().plus(Duration.ofMinutes(240)));
+        subtask3.setDuration(Duration.ofMinutes(1));
         manager.addSubtask(subtask3);
         Subtask subtask4 = new Subtask("Подзадача_4", "Описание Подзадачи_4",
                 TaskStatus.IN_PROGRESS, epic2.getTaskID());
+        subtask4.setStartTime(LocalDateTime.now().plus(Duration.ofMinutes(300)));
+        subtask4.setDuration(Duration.ofMinutes(1));
         manager.addSubtask(subtask4);
         Subtask subtask5 = new Subtask("Подзадача_5", "Описание Подзадачи_5",
                 TaskStatus.DONE, epic2.getTaskID());
+        subtask5.setStartTime(LocalDateTime.now().plus(Duration.ofMinutes(360)));
+        subtask5.setDuration(Duration.ofMinutes(1));
         manager.addSubtask(subtask5);
 
         Epic epic3 = new Epic("Эпик_3", "Описание Эпика_3");

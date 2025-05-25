@@ -3,8 +3,10 @@ package model;
 import util.TaskStatus;
 import util.TaskType;
 
+
 public class Subtask extends model.Task {
     private int epicID;
+
 
     public Subtask(String name, String description, TaskStatus status, int epicID) {
         super(name, description, status);
@@ -35,7 +37,7 @@ public class Subtask extends model.Task {
 
     @Override
     public String toString() {
-        return super.toString().trim() + "," + epicID + "\n";
+        return super.toString().trim() + " epicID: " + epicID + "\n";
     }
 
     @Override
@@ -45,6 +47,9 @@ public class Subtask extends model.Task {
                 getName() + "," +
                 getStatus() + "," +
                 getDescription() + "," +
+                (getStartTime() != null ? getStartTime().format(customFormatter.getFormatter()) : " ") + "," +
+                (getDuration() != null ? getDuration().toMinutes() : 0) + "," +
+                (getEndTime() != null ? getEndTime().format(customFormatter.getFormatter()) : " ") + "," +
                 epicID + "\n";
     }
 

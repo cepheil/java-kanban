@@ -4,15 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="830ab6ca-d4df-494b-a93f-ee04c930bdcd" name="Changes" comment="исправить Codestyle">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/java-kanban.iml" beforeDir="false" afterPath="$PROJECT_DIR$/java-kanban.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controllers/FileBackedTaskManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/FileBackedTaskManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controllers/InMemoryTaskManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/InMemoryTaskManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controllers/ManagerSaveException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/exceptions/ManagerSaveException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controllers/Managers.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/Managers.java" afterDir="false" />
+    <list default="true" id="830ab6ca-d4df-494b-a93f-ee04c930bdcd" name="Changes" comment="Исправить замечания согласно ревью:&#10; - Добавить утилитарный CustomFormatter&#10; - Скорректировать логику добавления задач в разные списки.&#10; - Скорректировать getPrioritizedTasks()">
+      <change beforePath="$PROJECT_DIR$/src/model/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Task.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,9 +17,9 @@
       <list>
         <option value="Enum" />
         <option value="Interface" />
-        <option value="Class" />
         <option value="Exception" />
         <option value="JUnit5 Test Class" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -60,14 +53,40 @@
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Application.Main.executor": "Run",
     "Downloaded.Files.Path.Enabled": "true",
-    "JUnit.All in java-kanban.executor": "Run",
-    "JUnit.FileBackedTaskManagerTest.getAllTypesById.executor": "Debug",
-    "JUnit.FileBackedTaskManagerTest.historyShouldKeepPreviousTaskVersionAfterUpdate.executor": "Debug",
-    "JUnit.FileBackedTaskManagerTest.loadMultipleTasks.executor": "Debug",
-    "JUnit.FileBackedTaskManagerTest.removeTaskById.executor": "Debug",
-    "JUnit.FileBackedTaskManagerTest.removeTaskByIdAndRemoveAllTasksByType.executor": "Debug",
-    "JUnit.FileBackedTaskManagerTest.saveLoadEmptyFile.executor": "Debug",
-    "JUnit.FileBackedTaskManagerTest.saveMultipleTasks.executor": "Debug",
+    "JUnit.All in java-kanban.executor": "Coverage",
+    "JUnit.FileBackedTaskManagerEmptyTest.executor": "Run",
+    "JUnit.FileBackedTaskManagerTest.executor": "Run",
+    "JUnit.FileBackedTaskManagerTest.getAllTypesById.executor": "Run",
+    "JUnit.FileBackedTaskManagerTest.historyShouldKeepPreviousTaskVersionAfterUpdate.executor": "Run",
+    "JUnit.FileBackedTaskManagerTest.loadMultipleTasks.executor": "Run",
+    "JUnit.FileBackedTaskManagerTest.removeTaskByIdAndRemoveAllTasksByType.executor": "Run",
+    "JUnit.FileBackedTaskManagerTest.saveLoadEmptyFile.executor": "Run",
+    "JUnit.FileBackedTaskManagerTest.saveMultipleTasks.executor": "Run",
+    "JUnit.InMemoryHistoryManagerTest.executor": "Run",
+    "JUnit.InMemoryHistoryManagerTest.testAddMultipleTasks.executor": "Run",
+    "JUnit.InMemoryHistoryManagerTest.testAddSingleTask.executor": "Run",
+    "JUnit.InMemoryHistoryManagerTest.testEmptyHistory.executor": "Run",
+    "JUnit.InMemoryTaskManagerTest.EpicShouldNotAddToSubtask.executor": "Run",
+    "JUnit.InMemoryTaskManagerTest.addNewTask.executor": "Run",
+    "JUnit.InMemoryTaskManagerTest.epicSubtaskIDsListDoNotContainSubtaskIDAfterRemove.executor": "Run",
+    "JUnit.InMemoryTaskManagerTest.executor": "Run",
+    "JUnit.InMemoryTaskManagerTest.historyShouldKeepPreviousSubtaskVersionAfterUpdate.executor": "Run",
+    "JUnit.InMemoryTaskManagerTest.historyShouldKeepPreviousTaskVersionAfterUpdate.executor": "Run",
+    "JUnit.InMemoryTaskManagerTest.linkedListHistoryRemoveTests.executor": "Run",
+    "JUnit.InMemoryTaskManagerTest.linkedListHistoryTests.executor": "Run",
+    "JUnit.InMemoryTaskManagerTest.removeAllTasks.executor": "Run",
+    "JUnit.InMemoryTaskManagerTest.removeTaskById.executor": "Run",
+    "JUnit.InMemoryTaskManagerTest.testGetPrioritizedTasks.executor": "Run",
+    "JUnit.InMemoryTaskManagerTest.updateAndGetHistory.executor": "Run",
+    "JUnit.InMemoryTaskManagerTest.updateTaskDoNotInfluenceToHistory.executor": "Run",
+    "JUnit.ManagersTest.executor": "Run",
+    "JUnit.ManagersTest.getDefaultShouldReturnInitializedObject.executor": "Run",
+    "JUnit.TaskManagerTest.executor": "Debug",
+    "JUnit.TaskManagerTest.manualAndGeneratedIdsShouldNotConflict.executor": "Debug",
+    "JUnit.TaskManagerTest.removeAllTasks.executor": "Debug",
+    "JUnit.TaskManagerTest.removeTaskById.executor": "Debug",
+    "JUnit.TaskTest.shouldCompareTasksWithTimeFieldsCorrectly.executor": "Debug",
+    "JUnit.TaskTest.shouldSetAndGetStartTimeAndDuration.executor": "Debug",
     "Repository.Attach.Annotations": "false",
     "Repository.Attach.JavaDocs": "false",
     "Repository.Attach.Sources": "false",
@@ -75,9 +94,8 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "git-widget-placeholder": "sprint__7-solution-in-file-manager",
-    "kotlin-language-version-configured": "true",
-    "last_directory_selection": "D:/practicum_java/sprint4_hw/java-kanban/java-kanban/src"
+    "git-widget-placeholder": "sprint__8-solution-time-and-duration",
+    "kotlin-language-version-configured": "true"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -85,14 +103,14 @@
       <recent name="" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
-      <recent name="exceptions" />
+      <recent name="model" />
     </key>
     <key name="CreateTestDialog.RecentsKey">
       <recent name="controllers" />
       <recent name="model" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="JUnit.All in java-kanban">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="java-kanban" />
@@ -108,49 +126,48 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="FileBackedTaskManagerTest.historyShouldKeepPreviousTaskVersionAfterUpdate" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="InMemoryHistoryManagerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="java-kanban" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="exceptions.*" />
+          <option name="PATTERN" value="controllers.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="controllers" />
-      <option name="MAIN_CLASS_NAME" value="controllers.FileBackedTaskManagerTest" />
-      <option name="METHOD_NAME" value="historyShouldKeepPreviousTaskVersionAfterUpdate" />
+      <option name="MAIN_CLASS_NAME" value="controllers.InMemoryHistoryManagerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="InMemoryHistoryManagerTest.testAddMultipleTasks" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="java-kanban" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="controllers.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="controllers" />
+      <option name="MAIN_CLASS_NAME" value="controllers.InMemoryHistoryManagerTest" />
+      <option name="METHOD_NAME" value="testAddMultipleTasks" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="FileBackedTaskManagerTest.removeTaskById" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="InMemoryTaskManagerTest.testGetPrioritizedTasks" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="java-kanban" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="exceptions.*" />
+          <option name="PATTERN" value="controllers.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="controllers" />
-      <option name="MAIN_CLASS_NAME" value="controllers.FileBackedTaskManagerTest" />
-      <option name="METHOD_NAME" value="removeTaskById" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="FileBackedTaskManagerTest.removeTaskByIdAndRemoveAllTasksByType" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="java-kanban" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="exceptions.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="controllers" />
-      <option name="MAIN_CLASS_NAME" value="controllers.FileBackedTaskManagerTest" />
-      <option name="METHOD_NAME" value="removeTaskByIdAndRemoveAllTasksByType" />
+      <option name="MAIN_CLASS_NAME" value="controllers.InMemoryTaskManagerTest" />
+      <option name="METHOD_NAME" value="testGetPrioritizedTasks" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -158,11 +175,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Main" />
         <item itemvalue="JUnit.All in java-kanban" />
-        <item itemvalue="JUnit.FileBackedTaskManagerTest.removeTaskByIdAndRemoveAllTasksByType" />
-        <item itemvalue="JUnit.FileBackedTaskManagerTest.removeTaskById" />
-        <item itemvalue="JUnit.FileBackedTaskManagerTest.historyShouldKeepPreviousTaskVersionAfterUpdate" />
+        <item itemvalue="Application.Main" />
+        <item itemvalue="JUnit.InMemoryTaskManagerTest.testGetPrioritizedTasks" />
+        <item itemvalue="JUnit.InMemoryHistoryManagerTest" />
+        <item itemvalue="JUnit.InMemoryHistoryManagerTest.testAddMultipleTasks" />
       </list>
     </recent_temporary>
   </component>
@@ -215,23 +232,111 @@
       <option name="project" value="LOCAL" />
       <updated>1743512358086</updated>
     </task>
-    <task id="LOCAL-00006" summary=" Добавить класс FileBackedTaskManager (наследуется от InMemoryTaskManager)&#10;   — Реализовать метод save()&#10;   — Реализовать метод fromString()&#10; &#10; Изменить InMemoryTaskManager&#10;   — Сделать поля tasks/epics/subtasks protected&#10;   — Добавить метод setCounter(int)&#10; &#10; Добавить в модель:&#10;   — В Task добавить метод toCsv()&#10;   — В Subtask переопределить toCsv()&#10; &#10; Создать исключение ManagerSaveException&#10; &#10; В класс Managers:&#10;   — Реализовать метод loadFromFile(File)&#10; &#10; В Main:&#10;   — Реализовать пункт меню «12» — сценарий ТЗ_7 (запись в файл + загрузка + сравнение)&#10; &#10; Добавить тесты в FileBackedTaskManagerTest:&#10;   — save/load пустого файла&#10;   — save нескольких задач&#10;   — load нескольких задач&#10;   — проверки getById/update/remove сохраняются через сериализацию&#10;   — проверка базовой функциональности">
+    <task id="LOCAL-00006" summary="d">
       <option name="closed" value="true" />
-      <created>1746644279665</created>
+      <created>1744983002686</created>
       <option name="number" value="00006" />
       <option name="presentableId" value="LOCAL-00006" />
       <option name="project" value="LOCAL" />
-      <updated>1746644279665</updated>
+      <updated>1744983002686</updated>
     </task>
-    <task id="LOCAL-00007" summary="исправить Codestyle">
+    <task id="LOCAL-00007" summary="&#10;добавить в классе InMemoryHistoryManager реализацию нового вложенного класса  HistoryManagerLinkList&#10;&#10;изменить метод хранения истории задач с помощью двусвязного списка и HashMap&#10;&#10;убрать ограничения в количестве сохраняемых задач в истории.&#10;&#10;реализовать метод linkLast добавляющий задачу в конец списка.&#10;&#10;реализовать метод removeNode  удаляющий узел из двусязного списка задач.&#10;&#10;переименовать метод updateHistory в метод  add  и переделать логику согласно ТЗ_6.&#10;&#10;избавиться от повторных просмотров в истории.&#10;&#10;добавить метод remove для удаления задач из истории по ID &#10;&#10;добавить новый Node - отвечающий за узлы в двусвязном списке.&#10;&#10;обновить unit-тесты.&#10;&#10;реализовать пользовательский сценарий в Main. &#10;&#10;добавить Javadoc в  InMemoryHistoryManager">
       <option name="closed" value="true" />
-      <created>1746645007441</created>
+      <created>1745269898085</created>
       <option name="number" value="00007" />
       <option name="presentableId" value="LOCAL-00007" />
       <option name="project" value="LOCAL" />
-      <updated>1746645007441</updated>
+      <updated>1745269898085</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="подправить code style">
+      <option name="closed" value="true" />
+      <created>1745270999823</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1745270999823</updated>
+    </task>
+    <task id="LOCAL-00009" summary="подправить code style">
+      <option name="closed" value="true" />
+      <created>1745271371892</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1745271371892</updated>
+    </task>
+    <task id="LOCAL-00010" summary="подправить code style">
+      <option name="closed" value="true" />
+      <created>1745271492051</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1745271492051</updated>
+    </task>
+    <task id="LOCAL-00011" summary="подправить code style">
+      <option name="closed" value="true" />
+      <created>1745271717364</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1745271717364</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Внести изменения, согласно комментариям ревью.&#10;&#10;Реализовать удаление задач из истории при вызове метода removeAllTasks.&#10;&#10;Модифицировать class Node: удалить типизацию, сделать сеттеры protected.&#10;&#10;Модифицировать class InMemoryHistoryManager: удалить поле  size, удалить класс class HistoryManagerLinkList, добавить методы в InMemoryHistoryManager.&#10;&#10;Добавить конструктор для глубокого копирования задач в классы Task, Subtask, Epic. &#10;&#10;Модифицировать методы get...ById, возвращают копию задачи.">
+      <option name="closed" value="true" />
+      <created>1745366668666</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1745366668666</updated>
+    </task>
+    <task id="LOCAL-00013" summary="feat: расширение модели задач, приоритезация, исключения и покрытие тестами&#10;&#10;Классы Task / Subtask:&#10;- Добавить поля startTime и duration&#10;- Переопределить методы toString, equals, hashCode&#10;- Добавить методы setDuration, getDuration, setStartTime, getStartTime, getEndTime&#10;- Модифицировать метод toCsv с учетом новых полей&#10;&#10;Класс Epic:&#10;- Реализовать методы getStartTime, getEndTime, getDuration&#10;- Реализовать метод updateStatus&#10;&#10;Добавить классы:&#10;- StartTimeComparator для сортировки задач по времени начала&#10;- Исключения: InvalidSubtaskException, IntersectTaskException, EpicNotFoundException&#10;&#10;Класс InMemoryTaskManager:&#10;- Добавить поле prioritizedTasks (TreeSet)&#10;- Реализовать метод getPrioritizedTasks&#10;- Реализовать метод isIntersect для проверки пересечений задач&#10;- Добавить метод updateEpicTime&#10;- Модифицировать метод updEpicStatus&#10;&#10;Класс InMemoryHistoryManager:&#10;- Провести рефакторинг метода copyTask для корректного копирования задач разных типов&#10;&#10;Класс FileBackedTaskManager:&#10;- Модифицировать методы сериализации и десериализации (toString, fromString)&#10;- Обновить метод save с учетом новых полей&#10;&#10;Тесты:&#10;- Добавить тесты для новых и измененных методов&#10;- Создать абстрактный класс TaskManagerTest для устранения дублирования&#10;- Добавить тесты по ТЗ_8:&#10;  - Проверка расчета статуса Epic (граничные случаи)&#10;  - Проверка расчета времени у задач и эпиков&#10;  - Проверка пересечения задач&#10;  - Проверка поведения InMemoryHistoryManager: удаление из начала, середины и конца истории, пустая история, дублирование">
+      <option name="closed" value="true" />
+      <created>1747965262576</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1747965262576</updated>
+    </task>
+    <task id="LOCAL-00014" summary="&#10;исправить CodeStyle">
+      <option name="closed" value="true" />
+      <created>1747965838058</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1747965838058</updated>
+    </task>
+    <task id="LOCAL-00015" summary="&#10;исправить CodeStyle">
+      <option name="closed" value="true" />
+      <created>1747965933522</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1747965933522</updated>
+    </task>
+    <task id="LOCAL-00016" summary="&#10;исправить CodeStyle">
+      <option name="closed" value="true" />
+      <created>1747966157058</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1747966157058</updated>
+    </task>
+    <task id="LOCAL-00017" summary="&#10;исправить CodeStyle)">
+      <option name="closed" value="true" />
+      <created>1747966268934</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1747966268934</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Исправить замечания согласно ревью:&#10; - Добавить утилитарный CustomFormatter&#10; - Скорректировать логику добавления задач в разные списки.&#10; - Скорректировать getPrioritizedTasks()">
+      <option name="closed" value="true" />
+      <created>1748137581874</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1748137581874</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -252,9 +357,15 @@
     <MESSAGE value="&#10;refactor:  TaskManager разделен на интерфейс и реализацию  &#10;feat: добавлена историю просмотра задач (InMemoryHistoryManager)  &#10;test: добавлены тесты для истории, добавления,  обновления задач и статусов." />
     <MESSAGE value="feat: добавлено консольное обновление задач + вызов истории (Main)" />
     <MESSAGE value=" fix:  InMemoryHistoryManager исправлен метод copyTask()&#10; fix:  InMemoryTaskManager добавлены проверки на null в методах getTaskById" />
-    <MESSAGE value=" Добавить класс FileBackedTaskManager (наследуется от InMemoryTaskManager)&#10;   — Реализовать метод save()&#10;   — Реализовать метод fromString()&#10; &#10; Изменить InMemoryTaskManager&#10;   — Сделать поля tasks/epics/subtasks protected&#10;   — Добавить метод setCounter(int)&#10; &#10; Добавить в модель:&#10;   — В Task добавить метод toCsv()&#10;   — В Subtask переопределить toCsv()&#10; &#10; Создать исключение ManagerSaveException&#10; &#10; В класс Managers:&#10;   — Реализовать метод loadFromFile(File)&#10; &#10; В Main:&#10;   — Реализовать пункт меню «12» — сценарий ТЗ_7 (запись в файл + загрузка + сравнение)&#10; &#10; Добавить тесты в FileBackedTaskManagerTest:&#10;   — save/load пустого файла&#10;   — save нескольких задач&#10;   — load нескольких задач&#10;   — проверки getById/update/remove сохраняются через сериализацию&#10;   — проверка базовой функциональности" />
-    <MESSAGE value="исправить Codestyle" />
-    <option name="LAST_COMMIT_MESSAGE" value="исправить Codestyle" />
+    <MESSAGE value="d" />
+    <MESSAGE value="&#10;добавить в классе InMemoryHistoryManager реализацию нового вложенного класса  HistoryManagerLinkList&#10;&#10;изменить метод хранения истории задач с помощью двусвязного списка и HashMap&#10;&#10;убрать ограничения в количестве сохраняемых задач в истории.&#10;&#10;реализовать метод linkLast добавляющий задачу в конец списка.&#10;&#10;реализовать метод removeNode  удаляющий узел из двусязного списка задач.&#10;&#10;переименовать метод updateHistory в метод  add  и переделать логику согласно ТЗ_6.&#10;&#10;избавиться от повторных просмотров в истории.&#10;&#10;добавить метод remove для удаления задач из истории по ID &#10;&#10;добавить новый Node - отвечающий за узлы в двусвязном списке.&#10;&#10;обновить unit-тесты.&#10;&#10;реализовать пользовательский сценарий в Main. &#10;&#10;добавить Javadoc в  InMemoryHistoryManager" />
+    <MESSAGE value="подправить code style" />
+    <MESSAGE value="Внести изменения, согласно комментариям ревью.&#10;&#10;Реализовать удаление задач из истории при вызове метода removeAllTasks.&#10;&#10;Модифицировать class Node: удалить типизацию, сделать сеттеры protected.&#10;&#10;Модифицировать class InMemoryHistoryManager: удалить поле  size, удалить класс class HistoryManagerLinkList, добавить методы в InMemoryHistoryManager.&#10;&#10;Добавить конструктор для глубокого копирования задач в классы Task, Subtask, Epic. &#10;&#10;Модифицировать методы get...ById, возвращают копию задачи." />
+    <MESSAGE value="feat: расширение модели задач, приоритезация, исключения и покрытие тестами&#10;&#10;Классы Task / Subtask:&#10;- Добавить поля startTime и duration&#10;- Переопределить методы toString, equals, hashCode&#10;- Добавить методы setDuration, getDuration, setStartTime, getStartTime, getEndTime&#10;- Модифицировать метод toCsv с учетом новых полей&#10;&#10;Класс Epic:&#10;- Реализовать методы getStartTime, getEndTime, getDuration&#10;- Реализовать метод updateStatus&#10;&#10;Добавить классы:&#10;- StartTimeComparator для сортировки задач по времени начала&#10;- Исключения: InvalidSubtaskException, IntersectTaskException, EpicNotFoundException&#10;&#10;Класс InMemoryTaskManager:&#10;- Добавить поле prioritizedTasks (TreeSet)&#10;- Реализовать метод getPrioritizedTasks&#10;- Реализовать метод isIntersect для проверки пересечений задач&#10;- Добавить метод updateEpicTime&#10;- Модифицировать метод updEpicStatus&#10;&#10;Класс InMemoryHistoryManager:&#10;- Провести рефакторинг метода copyTask для корректного копирования задач разных типов&#10;&#10;Класс FileBackedTaskManager:&#10;- Модифицировать методы сериализации и десериализации (toString, fromString)&#10;- Обновить метод save с учетом новых полей&#10;&#10;Тесты:&#10;- Добавить тесты для новых и измененных методов&#10;- Создать абстрактный класс TaskManagerTest для устранения дублирования&#10;- Добавить тесты по ТЗ_8:&#10;  - Проверка расчета статуса Epic (граничные случаи)&#10;  - Проверка расчета времени у задач и эпиков&#10;  - Проверка пересечения задач&#10;  - Проверка поведения InMemoryHistoryManager: удаление из начала, середины и конца истории, пустая история, дублирование" />
+    <MESSAGE value="&#10;исправить CodeStyle" />
+    <MESSAGE value="&#10;исправить CodeStyle)" />
+    <MESSAGE value="Исправить замечания согласно ревью:&#10; - Добавить утилитарный CustomFormatter&#10; - Скорректировать логику добавления задач в разные списки.&#10; - Скорректировать getPrioritizedTasks()" />
+    <option name="LAST_COMMIT_MESSAGE" value="Исправить замечания согласно ревью:&#10; - Добавить утилитарный CustomFormatter&#10; - Скорректировать логику добавления задач в разные списки.&#10; - Скорректировать getPrioritizedTasks()" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -267,6 +378,6 @@
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/java_kanban$All_in_java_kanban.ic" NAME="All in java-kanban Coverage Results" MODIFIED="1743455438379" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/java_kanban$All_in_java_kanban.ic" NAME="All in java-kanban Coverage Results" MODIFIED="1748137250866" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
   </component>
 </project>

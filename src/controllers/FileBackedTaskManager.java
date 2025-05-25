@@ -4,6 +4,7 @@ import exceptions.ManagerSaveException;
 import model.Epic;
 import model.Subtask;
 import model.Task;
+import util.CustomFormatter;
 import util.TaskStatus;
 import util.TaskType;
 
@@ -11,12 +12,15 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.TreeMap;
 
 
 public class FileBackedTaskManager extends InMemoryTaskManager {
     private final File file;
+    protected CustomFormatter customFormatter = new CustomFormatter();
 
     public FileBackedTaskManager(HistoryManager historyManager, File file) {
         super(historyManager);
@@ -82,7 +86,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         tasksToSave.putAll(subtasks);
 
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
-            String headLine = "id,type,name,status,description,epicID\n";
+            String headLine = "id,type,name,status,description,startTime,duration,endTime,epicID\n";  //"id,type,name,status,description,epicID\n"
             bw.write(headLine);
             for (Task task : tasksToSave.values()) {
                 String line = task.toCsv();
@@ -97,7 +101,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     public Task fromString(String value) {
         try {
             String[] split = value.split(",");
-            if (split.length < 5) {
+            if (split.length < 8) {
                 throw new IllegalArgumentException("Недостаточно данных в строке: " + value);
             }
             int taskId = Integer.parseInt(split[0].trim());
@@ -105,24 +109,37 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
             String name = split[2];
             TaskStatus status = TaskStatus.valueOf(split[3].trim());
             String description = split[4];
+            LocalDateTime startTime = split[5].isBlank() ? null : LocalDateTime.parse(split[5].trim(),
+                    customFormatter.getFormatter());
+            Duration duration = split[6].isBlank() ? Duration.ZERO : Duration.ofMinutes(Long.parseLong(split[6].trim()));
+            LocalDateTime endTime = split[7].isBlank() ? null : LocalDateTime.parse(split[7].trim(),
+                    customFormatter.getFormatter());
+
 
             switch (type) {
                 case TASK:
                     Task task = new Task(name, description, status);
                     task.setTaskID(taskId);
+                    task.setStartTime(startTime);
+                    task.setDuration(duration);
                     return task;
                 case EPIC:
                     Epic epic = new Epic(name, description);
                     epic.setTaskID(taskId);
                     epic.setStatus(status);
+                    epic.setStartTime(startTime);
+                    epic.setDuration(duration);
+                    epic.setEndTime(endTime);
                     return epic;
                 case SUBTASK:
-                    if (split.length < 6 || split[5].isBlank()) {
+                    if (split.length < 9 || split[8].isBlank()) {
                         throw new IllegalArgumentException("Subtask без epicId: " + value);
                     }
-                    int epicId = Integer.parseInt(split[5].trim());
+                    int epicId = Integer.parseInt(split[8].trim());
                     Subtask subtask = new Subtask(name, description, status, epicId);
                     subtask.setTaskID(taskId);
+                    subtask.setStartTime(startTime);
+                    subtask.setDuration(duration);
                     return subtask;
                 default:
                     throw new IllegalStateException("Неизвестный тип задачи: " + type);
