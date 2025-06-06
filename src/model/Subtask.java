@@ -1,7 +1,11 @@
 package model;
 
+import util.CustomFormatter;
 import util.TaskStatus;
 import util.TaskType;
+
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 
 public class Subtask extends model.Task {
@@ -13,6 +17,13 @@ public class Subtask extends model.Task {
         this.epicID = epicID;
         this.taskType = TaskType.SUBTASK;
     }
+
+    public Subtask(String name, String description, TaskStatus status, LocalDateTime startTime, Duration duration, int epicID) {
+        super(name, description, status, startTime, duration);
+        this.epicID = epicID;
+        this.taskType = TaskType.SUBTASK;
+    }
+
 
     public Subtask(Subtask other) {
         super(other);
@@ -47,9 +58,9 @@ public class Subtask extends model.Task {
                 getName() + "," +
                 getStatus() + "," +
                 getDescription() + "," +
-                (getStartTime() != null ? getStartTime().format(customFormatter.getFormatter()) : " ") + "," +
+                (getStartTime() != null ? getStartTime().format(CustomFormatter.getFormatter()) : " ") + "," +
                 (getDuration() != null ? getDuration().toMinutes() : 0) + "," +
-                (getEndTime() != null ? getEndTime().format(customFormatter.getFormatter()) : " ") + "," +
+                (getEndTime() != null ? getEndTime().format(CustomFormatter.getFormatter()) : " ") + "," +
                 epicID + "\n";
     }
 
