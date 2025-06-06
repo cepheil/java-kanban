@@ -17,13 +17,20 @@ public class Task {
     private TaskStatus status;
     private Duration duration;
     private LocalDateTime startTime;
-    protected CustomFormatter customFormatter = new CustomFormatter();
+
 
     public Task(String name, String description, TaskStatus status) {
         this.name = name;
         this.description = description;
         this.status = status;
         this.taskType = TaskType.TASK;
+    }
+
+
+    public Task(String name, String description, TaskStatus status, LocalDateTime startTime, Duration duration) {
+        this(name, description, status);
+        this.startTime = startTime;
+        this.duration = duration;
     }
 
     //конструктор для копирования задач
@@ -79,9 +86,9 @@ public class Task {
         return "[" + taskType + "]" + " [ID:" + taskID + "]" +
                 " name: " + name + " [" + status + "] " +
                 "Description: " + description + " [" +
-                "StartTime: " + (startTime != null ? startTime.format(customFormatter.getFormatter()) : " ") +
+                "StartTime: " + (startTime != null ? startTime.format(CustomFormatter.getFormatter()) : " ") +
                 " Duration: " + (duration != null ? duration.toMinutes() : "0") +
-                " EndTime: " + (getEndTime() != null ? getEndTime().format(customFormatter.getFormatter()) : " ") + "] " + "\n";
+                " EndTime: " + (getEndTime() != null ? getEndTime().format(CustomFormatter.getFormatter()) : " ") + "] " + "\n";
     }
 
     public String toCsv() {
@@ -90,9 +97,9 @@ public class Task {
                 name + "," +
                 status + "," +
                 description + "," +
-                (startTime != null ? startTime.format(customFormatter.getFormatter()) : " ") + "," +
+                (startTime != null ? startTime.format(CustomFormatter.getFormatter()) : " ") + "," +
                 (duration != null ? duration.toMinutes() : 0) + "," +
-                (getEndTime() != null ? getEndTime().format(customFormatter.getFormatter()) : " ") + ", " + "\n";
+                (getEndTime() != null ? getEndTime().format(CustomFormatter.getFormatter()) : " ") + ", " + "\n";
     }
 
     ////sprint_8-solution-time-and-duration
