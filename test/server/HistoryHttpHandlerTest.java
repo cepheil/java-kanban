@@ -1,5 +1,6 @@
 package server;
 
+import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import controllers.Managers;
@@ -31,6 +32,7 @@ class HistoryHttpHandlerTest {
     private HttpTaskServer server;
     private final LocalDateTime start = LocalDateTime.now();
     private final Duration duration = Duration.ofMinutes(30);
+    private final Gson gson = BaseHttpHandler.gson;
 
     @BeforeEach
     void setUp() throws IOException {
@@ -58,7 +60,8 @@ class HistoryHttpHandlerTest {
         assertEquals(200, response.statusCode(), "Код ответа должен быть 200");
 
         Type taskListType = new TypeToken<List<Task>>() {}.getType();
-        List<Task> history = server.getGson().fromJson(response.body(), taskListType);
+        //List<Task> history = server.getGson().fromJson(response.body(), taskListType);
+        List<Task> history = gson.fromJson(response.body(), taskListType);
 
         assertNotNull(history, "История не должна быть null");
         assertTrue(history.isEmpty(), "История должна быть пустой");
@@ -85,7 +88,7 @@ class HistoryHttpHandlerTest {
         assertEquals(200, response.statusCode(), "Код ответа должен быть 200");
 
         Type taskListType = new TypeToken<List<Task>>() {}.getType();
-        List<Task> history = server.getGson().fromJson(response.body(), taskListType);
+        List<Task> history = gson.fromJson(response.body(), taskListType);
 
         assertNotNull(history, "История не должна быть null");
         assertEquals(2, history.size(), "В истории должно быть 2 задачи");

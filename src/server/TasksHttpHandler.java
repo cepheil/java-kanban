@@ -1,6 +1,5 @@
 package server;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.sun.net.httpserver.HttpExchange;
 import controllers.TaskManager;
@@ -13,39 +12,13 @@ import java.util.List;
 
 public class TasksHttpHandler extends BaseHttpHandler {
 
-    public TasksHttpHandler(TaskManager taskManager, Gson gson) {
-        super(taskManager, gson);
+    public TasksHttpHandler(TaskManager taskManager) {
+        super(taskManager);
     }
+
 
     @Override
-    public void handle(HttpExchange exchange) throws IOException {
-        try {
-            String method = exchange.getRequestMethod();
-            switch (method) {
-                case "GET":
-                    getHandle(exchange);
-                    break;
-                case "POST":
-                    postHandle(exchange);
-                    break;
-                case "DELETE":
-                    deleteHandle(exchange);
-                    break;
-                default:
-                    sendResponse(exchange, 405, "Method Not Allowed");
-                    break;
-            }
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            sendResponse(exchange, 500, "Internal Server Error");
-        } finally {
-            exchange.close();
-        }
-    }
-
-
-    private void getHandle(HttpExchange exchange) throws IOException {
-        String path = exchange.getRequestURI().getPath();
+    protected void processGet(HttpExchange exchange, String path) throws IOException {
         if (path.equals("/tasks")) {
             List<Task> tasks = taskManager.getTasks();
             String responseText = gson.toJson(tasks);
@@ -66,9 +39,8 @@ public class TasksHttpHandler extends BaseHttpHandler {
         }
     }
 
-
-    private void postHandle(HttpExchange exchange) throws IOException {
-        String path = exchange.getRequestURI().getPath();
+    @Override
+    protected void processPost(HttpExchange exchange, String path) throws IOException {
         if (!path.equals("/tasks")) {
             sendResponse(exchange, 405, "Method Not Allowed");
             return;
@@ -103,9 +75,8 @@ public class TasksHttpHandler extends BaseHttpHandler {
         }
     }
 
-
-    private void deleteHandle(HttpExchange exchange) throws IOException {
-        String path = exchange.getRequestURI().getPath();
+    @Override
+    protected void processDelete(HttpExchange exchange, String path) throws IOException {
         if (path.equals("/tasks")) {
             taskManager.removeAllTasks(TaskType.TASK);
             sendText(exchange, "All tasks deleted");  //code 200

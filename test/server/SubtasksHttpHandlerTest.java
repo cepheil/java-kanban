@@ -32,7 +32,7 @@ class SubtasksHttpHandlerTest {
 
     private TaskManager manager;
     private HttpTaskServer taskServer;
-    private final Gson gson = HttpTaskServer.getGson();
+    private final Gson gson = BaseHttpHandler.gson;
     private final HttpClient client = HttpClient.newHttpClient();
     private static final String SUBTASKS_URL = "http://localhost:8080/subtasks";
     LocalDateTime start;

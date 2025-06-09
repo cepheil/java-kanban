@@ -29,7 +29,7 @@ class PrioritizedHttpHandlerTest {
 
     private TaskManager manager;
     private HttpTaskServer server;
-    private final Gson gson = HttpTaskServer.getGson();
+    private final Gson gson = BaseHttpHandler.gson;
     private final HttpClient client = HttpClient.newHttpClient();
     private static final String BASE_URL = "http://localhost:8080/prioritized";
     LocalDateTime start;

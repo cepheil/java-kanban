@@ -29,19 +29,16 @@ class EpicsHttpHandlerTest {
 
     private TaskManager manager;
     private HttpTaskServer taskServer;
-    private final Gson gson = HttpTaskServer.getGson();
+    private final Gson gson = BaseHttpHandler.gson;
     private final HttpClient client = HttpClient.newHttpClient();
     private static final String EPICS_URL = "http://localhost:8080/epics";
-//    LocalDateTime start;
-//    Duration duration;
+
 
     @BeforeEach
     void setUp() throws IOException {
         manager = Managers.getDefault();
         taskServer = new HttpTaskServer(manager);
         taskServer.start();
-//        start = LocalDateTime.of(2030, 1, 1, 10, 0);
-//        duration = Duration.ofMinutes(10);
     }
 
     @AfterEach

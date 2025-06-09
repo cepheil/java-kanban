@@ -1,6 +1,5 @@
 package server;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.sun.net.httpserver.HttpExchange;
 import controllers.TaskManager;
@@ -12,39 +11,13 @@ import java.io.IOException;
 import java.util.List;
 
 public class EpicsHttpHandler extends BaseHttpHandler {
-    public EpicsHttpHandler(TaskManager taskManager, Gson gson) {
-        super(taskManager, gson);
+    public EpicsHttpHandler(TaskManager taskManager) {
+        super(taskManager);
     }
+
 
     @Override
-    public void handle(HttpExchange exchange) throws IOException {
-        try {
-            String method = exchange.getRequestMethod();
-            switch (method) {
-                case "GET":
-                    getHandle(exchange);
-                    break;
-                case "POST":
-                    postHandle(exchange);
-                    break;
-                case "DELETE":
-                    deleteHandle(exchange);
-                    break;
-                default:
-                    sendResponse(exchange, 405, "Method Not Allowed");
-                    break;
-            }
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            sendResponse(exchange, 500, "Internal Server Error");
-        } finally {
-            exchange.close();
-        }
-    }
-
-
-    private void getHandle(HttpExchange exchange) throws IOException {
-        String path = exchange.getRequestURI().getPath();
+    protected void processGet(HttpExchange exchange, String path) throws IOException {
         if (path.matches("/epics/\\d+/subtasks")) {
             int taskId = parsePathId(path);
             if (taskId < 0) {
@@ -80,9 +53,8 @@ public class EpicsHttpHandler extends BaseHttpHandler {
         }
     }
 
-
-    private void postHandle(HttpExchange exchange) throws IOException {
-        String path = exchange.getRequestURI().getPath();
+    @Override
+    protected void processPost(HttpExchange exchange, String path) throws IOException {
         if (!path.equals("/epics")) {
             sendResponse(exchange, 405, "Method Not Allowed");
             return;
@@ -117,9 +89,8 @@ public class EpicsHttpHandler extends BaseHttpHandler {
         }
     }
 
-
-    private void deleteHandle(HttpExchange exchange) throws IOException {
-        String path = exchange.getRequestURI().getPath();
+    @Override
+    protected void processDelete(HttpExchange exchange, String path) throws IOException {
         if (path.equals("/epics")) {
             taskManager.removeAllTasks(TaskType.EPIC);
             sendText(exchange, "All epics deleted");

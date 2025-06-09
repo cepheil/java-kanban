@@ -4,27 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="830ab6ca-d4df-494b-a93f-ee04c930bdcd" name="Changes" comment=" &#10;исправить CodeStyle)">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/google_code_gson.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/server/BaseHttpHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/server/EpicsHttpHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/server/HistoryHttpHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/server/HttpTaskServer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/server/PrioritizedHttpHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/server/SubtasksHttpHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/server/TasksHttpHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/util/DurationAdapter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/util/LocalDateTimeAdapter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/server/EpicsHttpHandlerTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/server/HistoryHttpHandlerTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/server/PrioritizedHttpHandlerTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/server/SubtasksHttpHandlerTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/server/TasksHttpHandlerTest.java" afterDir="false" />
+    <list default="true" id="830ab6ca-d4df-494b-a93f-ee04c930bdcd" name="Changes" comment="feat: реализовать HTTP-сервер и обработчики для задач (согласно ТЗ_9)&#10;server:&#10;&#10;Реализовать классы-обработчики HTTP-запросов:&#10;-BaseHttpHandler&#10;-TasksHttpHandler&#10;-SubtasksHttpHandler&#10;-EpicsHttpHandler&#10;-HistoryHttpHandler&#10;-PrioritizedHttpHandler&#10;Добавить основной серверный класс: HttpTaskServer&#10;&#10;util:&#10;Добавить адаптеры для сериализации/десериализации:&#10;-LocalDateTimeAdapter&#10;-DurationAdapter&#10;&#10;core:&#10;Выполнен рефакторинг CustomFormatter&#10;Обновлены модели Task и Subtask для поддержки новых требований API&#10;&#10;test/server:&#10;Написать и выполнить тесты для обработчиков:&#10;-TasksHttpHandlerTest&#10;-SubtasksHttpHandlerTest&#10;-EpicsHttpHandlerTest&#10;-HistoryHttpHandlerTest&#10;-PrioritizedHttpHandlerTest">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/java-kanban.iml" beforeDir="false" afterPath="$PROJECT_DIR$/java-kanban.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Subtask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Subtask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Task.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/util/CustomFormatter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/CustomFormatter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/BaseHttpHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/BaseHttpHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/EpicsHttpHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/EpicsHttpHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/HistoryHttpHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/HistoryHttpHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/HttpTaskServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/HttpTaskServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/PrioritizedHttpHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/PrioritizedHttpHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/SubtasksHttpHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/SubtasksHttpHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/TasksHttpHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/TasksHttpHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/server/EpicsHttpHandlerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/server/EpicsHttpHandlerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/server/HistoryHttpHandlerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/server/HistoryHttpHandlerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/server/PrioritizedHttpHandlerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/server/PrioritizedHttpHandlerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/server/SubtasksHttpHandlerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/server/SubtasksHttpHandlerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/server/TasksHttpHandlerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/server/TasksHttpHandlerTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -123,7 +116,8 @@
     "JUnit.PrioritizedHttpHandlerTest.testGetPrioritizedTasks_WhenMultipleTasks.executor": "Run",
     "JUnit.PrioritizedHttpHandlerTest.testPrioritizedTasksOrder.executor": "Run",
     "JUnit.TasksHttpHandlerTest.executor": "Run",
-    "JUnit.server in java-kanban.executor": "Coverage",
+    "JUnit.TasksHttpHandlerTest.testUpdateTask.executor": "Run",
+    "JUnit.server in java-kanban.executor": "Run",
     "Repository.Attach.Annotations": "false",
     "Repository.Attach.JavaDocs": "false",
     "Repository.Attach.Sources": "false",
@@ -153,38 +147,6 @@
     </key>
   </component>
   <component name="RunManager" selected="JUnit.server in java-kanban">
-    <configuration name="EpicsHttpHandlerTest.testTaskSerializationAndDeserialization" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="java-kanban" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="server.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="server" />
-      <option name="MAIN_CLASS_NAME" value="server.EpicsHttpHandlerTest" />
-      <option name="METHOD_NAME" value="testTaskSerializationAndDeserialization" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="PrioritizedHttpHandlerTest.testGetPrioritizedTasks_WhenEmpty" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="java-kanban" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="server.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="server" />
-      <option name="MAIN_CLASS_NAME" value="server.PrioritizedHttpHandlerTest" />
-      <option name="METHOD_NAME" value="testGetPrioritizedTasks_WhenEmpty" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="PrioritizedHttpHandlerTest.testGetPrioritizedTasks_WhenMultipleTasks" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="java-kanban" />
       <extension name="coverage">
@@ -217,6 +179,37 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="TasksHttpHandlerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="java-kanban" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="server.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="server" />
+      <option name="MAIN_CLASS_NAME" value="server.TasksHttpHandlerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TasksHttpHandlerTest.testUpdateTask" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="java-kanban" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="server.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="server" />
+      <option name="MAIN_CLASS_NAME" value="server.TasksHttpHandlerTest" />
+      <option name="METHOD_NAME" value="testUpdateTask" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="server in java-kanban" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="java-kanban" />
       <extension name="coverage">
@@ -234,10 +227,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.server in java-kanban" />
+        <item itemvalue="JUnit.TasksHttpHandlerTest" />
+        <item itemvalue="JUnit.TasksHttpHandlerTest.testUpdateTask" />
         <item itemvalue="JUnit.PrioritizedHttpHandlerTest.testPrioritizedTasksOrder" />
         <item itemvalue="JUnit.PrioritizedHttpHandlerTest.testGetPrioritizedTasks_WhenMultipleTasks" />
-        <item itemvalue="JUnit.PrioritizedHttpHandlerTest.testGetPrioritizedTasks_WhenEmpty" />
-        <item itemvalue="JUnit.EpicsHttpHandlerTest.testTaskSerializationAndDeserialization" />
       </list>
     </recent_temporary>
   </component>
@@ -306,7 +299,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746645007441</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="feat: реализовать HTTP-сервер и обработчики для задач (согласно ТЗ_9)&#10;server:&#10;&#10;Реализовать классы-обработчики HTTP-запросов:&#10;-BaseHttpHandler&#10;-TasksHttpHandler&#10;-SubtasksHttpHandler&#10;-EpicsHttpHandler&#10;-HistoryHttpHandler&#10;-PrioritizedHttpHandler&#10;Добавить основной серверный класс: HttpTaskServer&#10;&#10;util:&#10;Добавить адаптеры для сериализации/десериализации:&#10;-LocalDateTimeAdapter&#10;-DurationAdapter&#10;&#10;core:&#10;Выполнен рефакторинг CustomFormatter&#10;Обновлены модели Task и Subtask для поддержки новых требований API&#10;&#10;test/server:&#10;Написать и выполнить тесты для обработчиков:&#10;-TasksHttpHandlerTest&#10;-SubtasksHttpHandlerTest&#10;-EpicsHttpHandlerTest&#10;-HistoryHttpHandlerTest&#10;-PrioritizedHttpHandlerTest">
+      <option name="closed" value="true" />
+      <created>1749169190917</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1749169190917</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -329,7 +330,8 @@
     <MESSAGE value=" fix:  InMemoryHistoryManager исправлен метод copyTask()&#10; fix:  InMemoryTaskManager добавлены проверки на null в методах getTaskById" />
     <MESSAGE value=" Добавить класс FileBackedTaskManager (наследуется от InMemoryTaskManager)&#10;   — Реализовать метод save()&#10;   — Реализовать метод fromString()&#10; &#10; Изменить InMemoryTaskManager&#10;   — Сделать поля tasks/epics/subtasks protected&#10;   — Добавить метод setCounter(int)&#10; &#10; Добавить в модель:&#10;   — В Task добавить метод toCsv()&#10;   — В Subtask переопределить toCsv()&#10; &#10; Создать исключение ManagerSaveException&#10; &#10; В класс Managers:&#10;   — Реализовать метод loadFromFile(File)&#10; &#10; В Main:&#10;   — Реализовать пункт меню «12» — сценарий ТЗ_7 (запись в файл + загрузка + сравнение)&#10; &#10; Добавить тесты в FileBackedTaskManagerTest:&#10;   — save/load пустого файла&#10;   — save нескольких задач&#10;   — load нескольких задач&#10;   — проверки getById/update/remove сохраняются через сериализацию&#10;   — проверка базовой функциональности" />
     <MESSAGE value="исправить Codestyle" />
-    <option name="LAST_COMMIT_MESSAGE" value="исправить Codestyle" />
+    <MESSAGE value="feat: реализовать HTTP-сервер и обработчики для задач (согласно ТЗ_9)&#10;server:&#10;&#10;Реализовать классы-обработчики HTTP-запросов:&#10;-BaseHttpHandler&#10;-TasksHttpHandler&#10;-SubtasksHttpHandler&#10;-EpicsHttpHandler&#10;-HistoryHttpHandler&#10;-PrioritizedHttpHandler&#10;Добавить основной серверный класс: HttpTaskServer&#10;&#10;util:&#10;Добавить адаптеры для сериализации/десериализации:&#10;-LocalDateTimeAdapter&#10;-DurationAdapter&#10;&#10;core:&#10;Выполнен рефакторинг CustomFormatter&#10;Обновлены модели Task и Subtask для поддержки новых требований API&#10;&#10;test/server:&#10;Написать и выполнить тесты для обработчиков:&#10;-TasksHttpHandlerTest&#10;-SubtasksHttpHandlerTest&#10;-EpicsHttpHandlerTest&#10;-HistoryHttpHandlerTest&#10;-PrioritizedHttpHandlerTest" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: реализовать HTTP-сервер и обработчики для задач (согласно ТЗ_9)&#10;server:&#10;&#10;Реализовать классы-обработчики HTTP-запросов:&#10;-BaseHttpHandler&#10;-TasksHttpHandler&#10;-SubtasksHttpHandler&#10;-EpicsHttpHandler&#10;-HistoryHttpHandler&#10;-PrioritizedHttpHandler&#10;Добавить основной серверный класс: HttpTaskServer&#10;&#10;util:&#10;Добавить адаптеры для сериализации/десериализации:&#10;-LocalDateTimeAdapter&#10;-DurationAdapter&#10;&#10;core:&#10;Выполнен рефакторинг CustomFormatter&#10;Обновлены модели Task и Subtask для поддержки новых требований API&#10;&#10;test/server:&#10;Написать и выполнить тесты для обработчиков:&#10;-TasksHttpHandlerTest&#10;-SubtasksHttpHandlerTest&#10;-EpicsHttpHandlerTest&#10;-HistoryHttpHandlerTest&#10;-PrioritizedHttpHandlerTest" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
